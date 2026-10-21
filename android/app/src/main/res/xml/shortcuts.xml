@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="shortcut_lock_screen"
+        android:enabled="true"
+        android:icon="@drawable/ic_lock"
+        android:shortcutShortLabel="@string/shortcut_lock_short"
+        android:shortcutLongLabel="@string/shortcut_lock_long">
+        <intent
+            android:action="com.floatingbutton.app.ACTION_QUICK_LOCK"
+            android:targetPackage="com.floatingbutton.app"
+            android:targetClass="com.floatingbutton.app.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="shortcut_volume_ui"
+        android:enabled="true"
+        android:icon="@drawable/ic_volume"
+        android:shortcutShortLabel="@string/shortcut_volume_short"
+        android:shortcutLongLabel="@string/shortcut_volume_long">
+        <intent
+            android:action="com.floatingbutton.app.ACTION_QUICK_VOLUME"
+            android:targetPackage="com.floatingbutton.app"
+            android:targetClass="com.floatingbutton.app.MainActivity" />
+    </shortcut>
+</shortcuts>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Power &amp; Volume はシステム画面ロック (GLOBAL_ACTION_LOCK_SCREEN) の実行にのみこのサービスを使用します。データを収集・監視することはありません。</string>
+    <string name="tile_lock_label">画面ロック</string>
+    <string name="tile_volume_label">音量</string>
+    <string name="shortcut_lock_short">ロック</string>
+    <string name="shortcut_lock_long">画面ロック</string>
+    <string name="shortcut_volume_short">音量</string>
+    <string name="shortcut_volume_long">音量調節</string>
+</resources>

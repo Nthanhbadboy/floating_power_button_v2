@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Power &amp; Volume sử dụng dịch vụ này chỉ để thực hiện thao tác khóa màn hình hệ thống (GLOBAL_ACTION_LOCK_SCREEN). Ứng dụng không giám sát, không thu thập và không lưu trữ bất kỳ dữ liệu nào trên màn hình hoặc thao tác phím.</string>
+    
+    <!-- Quick Settings Tiles -->
+    <string name="tile_lock_label">Khóa màn hình</string>
+    <string name="tile_volume_label">Bảng âm lượng</string>
+
+    <!-- App Shortcuts -->
+    <string name="shortcut_lock_short">Khóa</string>
+    <string name="shortcut_lock_long">Khóa màn hình</string>
+    <string name="shortcut_volume_short">Âm lượng</string>
+    <string name="shortcut_volume_long">Bảng âm lượng</string>
+</resources>

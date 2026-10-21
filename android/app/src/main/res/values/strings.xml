@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Power &amp; Volume uses this service solely to execute the system screen-lock action (GLOBAL_ACTION_LOCK_SCREEN). It does not monitor, collect, or store any on-screen data or keystrokes.</string>
+    
+    <!-- Quick Settings Tiles -->
+    <string name="tile_lock_label">Lock Screen</string>
+    <string name="tile_volume_label">Volume UI</string>
+
+    <!-- App Shortcuts -->
+    <string name="shortcut_lock_short">Lock</string>
+    <string name="shortcut_lock_long">Lock Screen</string>
+    <string name="shortcut_volume_short">Volume</string>
+    <string name="shortcut_volume_long">System Volume</string>
+</resources>

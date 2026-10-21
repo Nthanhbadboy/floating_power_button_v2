@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Power &amp; Volume utiliza este servicio únicamente para ejecutar el bloqueo de pantalla del sistema (GLOBAL_ACTION_LOCK_SCREEN). No supervisa ni recopila ningún dato.</string>
+    <string name="tile_lock_label">Bloquear</string>
+    <string name="tile_volume_label">Volumen</string>
+    <string name="shortcut_lock_short">Bloquear</string>
+    <string name="shortcut_lock_long">Bloquear pantalla</string>
+    <string name="shortcut_volume_short">Volumen</string>
+    <string name="shortcut_volume_long">Panel de volumen</string>
+</resources>

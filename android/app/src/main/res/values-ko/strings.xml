@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Power &amp; Volume 은 시스템 화면 잠금 (GLOBAL_ACTION_LOCK_SCREEN) 실행에만 이 서비스를 사용합니다. 개인 정보를 수집하거나 모니터링하지 않습니다.</string>
+    <string name="tile_lock_label">화면 잠금</string>
+    <string name="tile_volume_label">볼륨</string>
+    <string name="shortcut_lock_short">잠금</string>
+    <string name="shortcut_lock_long">화면 잠금</string>
+    <string name="shortcut_volume_short">볼륨</string>
+    <string name="shortcut_volume_long">볼륨 조절</string>
+</resources>

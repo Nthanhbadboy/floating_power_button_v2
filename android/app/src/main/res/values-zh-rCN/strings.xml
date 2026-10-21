@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Power &amp; Volume 仅使用此无障碍服务执行系统锁屏操作 (GLOBAL_ACTION_LOCK_SCREEN)。本应用绝不监控、收集或存储任何屏幕内容或按键输入。</string>
+    <string name="tile_lock_label">锁屏</string>
+    <string name="tile_volume_label">音量面板</string>
+    <string name="shortcut_lock_short">锁屏</string>
+    <string name="shortcut_lock_long">一键锁屏</string>
+    <string name="shortcut_volume_short">音量</string>
+    <string name="shortcut_volume_long">系统音量</string>
+</resources>
