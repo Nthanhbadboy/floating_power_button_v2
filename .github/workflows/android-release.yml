@@ -144,6 +144,30 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 14
+      - name: Build signed APK with Huawei test banner
+        shell: bash
+        run: |
+          set -o pipefail
+          if ! flutter build apk --release --dart-define=PETAL_ADS_TEST=true 2>&1 | tee "$RUNNER_TEMP/android-test-build.log"; then
+            python3 -c 'import sys; text="".join(open(sys.argv[1], errors="replace").readlines()[-100:]); print("::error::" + text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))' "$RUNNER_TEMP/android-test-build.log"
+            exit 1
+          fi
+          cp build/app/outputs/flutter-apk/app-release.apk "$RUNNER_TEMP/Power-Volume-test-ads.apk"
+          apksigner=$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)
+          output=$("$apksigner" verify --verbose --print-certs "$RUNNER_TEMP/Power-Volume-test-ads.apk")
+          printf '%s\n' "$output" | grep -qx 'Number of signers: 1'
+          fingerprint=$(printf '%s\n' "$output" | awk '/^(Signer( \([^)]*\))? #[0-9]+|V[0-9.]+ Signer( #[0-9]+)?):? certificate SHA-256 digest:/ {sub(/^.*certificate SHA-256 digest:[[:space:]]*/, ""); print; exit}' | tr -d ': \r' | tr '[:lower:]' '[:upper:]')
+          if [[ "$fingerprint" != "$EXPECTED_SHA256" ]]; then
+            echo '::error::Test APK signer certificate missing or does not match the existing signing key.'
+            exit 1
+          fi
+      - name: Upload test-banner APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Power-Volume-test-banner-apk
+          path: ${{ runner.temp }}/Power-Volume-test-ads.apk
+          if-no-files-found: error
+          retention-days: 14
       - name: Remove signing key from runner
         if: always()
         shell: bash

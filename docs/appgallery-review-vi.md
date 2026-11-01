@@ -26,3 +26,5 @@
 - Kiểm tra mã banner, fingerprint ký app thực tế và trạng thái ad unit; việc build thành công không bảo đảm phân phối hoặc tạo doanh thu.
 - Bản thông báo và chính sách là dự thảo; rà lại với luật sư/người bản ngữ và yêu cầu consent/CMP của Huawei tại từng khu vực (đặc biệt EEA). Nút đồng ý tùy chỉnh chưa được xác nhận là CMP/TCF được Huawei chấp nhận. Rà merged manifest và SDK để xác minh việc khởi tạo/thu thập dữ liệu, đặc biệt trước khi có lựa chọn. Không phát hành cho đến khi đáp ứng yêu cầu pháp lý.
 - Chính sách Vercel hiện chưa được cập nhật; bản trong `docs` chỉ là dự thảo. Điền chính xác biểu mẫu khai báo dữ liệu và SDK trong AppGallery.
+
+- Merged manifest của ads-prime có thêm `QUERY_ALL_PACKAGES`, các quyền Huawei/Honor đặc quyền và provider Huawei khởi động theo tiến trình. Chưa xác minh SDK có truy cập/thu thập dữ liệu trước lựa chọn hay không; nút chọn chỉ chặn mã app tạo/yêu cầu banner. Cần kiểm tra hành vi thực tế, sự cần thiết của các quyền và disclosure trước khi phát hành.
