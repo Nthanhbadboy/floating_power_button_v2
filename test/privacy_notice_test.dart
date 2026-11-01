@@ -9,16 +9,18 @@ void main() {
   const channel = MethodChannel('com.floatingbutton.app/bridge');
   var acknowledged = false;
   var openCount = 0;
+  var savedLanguage = 'system';
 
   setUp(() {
     acknowledged = false;
     openCount = 0;
+    savedLanguage = 'system';
     AppStrings.currentLanguage = SupportedLanguage.system;
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
       switch (call.method) {
-        case 'getSelectedLanguage': return 'system';
-        case 'setSelectedLanguage': return true;
+        case 'getSelectedLanguage': return savedLanguage;
+        case 'setSelectedLanguage': savedLanguage = call.arguments['language'] as String; return true;
         case 'hasAcknowledgedPrivacy': return acknowledged;
         case 'acknowledgePrivacy': acknowledged = true; return true;
         case 'openPrivacyPolicy': openCount++; return true;
@@ -54,6 +56,21 @@ void main() {
     await tester.tap(find.byType(DropdownButton<SupportedLanguage>));
     await tester.pumpAndSettle();
     await tester.tap(find.text('🇨🇳 简体中文').last);
+    await tester.pumpAndSettle();
+    expect(find.text('阅读隐私政策'), findsOneWidget);
+  });
+
+  testWidgets('language selection is restored on the next launch', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: PrivacyGate()));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(DropdownButton<SupportedLanguage>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('🇨🇳 简体中文').last);
+    await tester.pumpAndSettle();
+    expect(savedLanguage, 'chinese');
+    await tester.pumpWidget(const MaterialApp(home: SizedBox()));
+    AppStrings.currentLanguage = SupportedLanguage.system;
+    await tester.pumpWidget(const MaterialApp(home: PrivacyGate()));
     await tester.pumpAndSettle();
     expect(find.text('阅读隐私政策'), findsOneWidget);
   });

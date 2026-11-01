@@ -57,11 +57,11 @@ class KeepAliveService : Service() {
             manager?.deleteNotificationChannel(LEGACY_CHANNEL_ID)
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                getString(R.string.quick_controls_channel),
+                AppLocale.text(this, R.string.quick_controls_channel),
                 // LOW (not MIN): shows the status-bar icon without sound/vibration.
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = getString(R.string.quick_controls_channel_description)
+                description = AppLocale.text(this@KeepAliveService, R.string.quick_controls_channel_description)
                 setShowBadge(false)
             }
             manager?.createNotificationChannel(channel)
@@ -91,18 +91,18 @@ class KeepAliveService : Service() {
         )
 
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(getString(R.string.quick_controls_title))
-            .setContentText(getString(R.string.quick_controls_description))
+            .setContentTitle(AppLocale.text(this, R.string.quick_controls_title))
+            .setContentText(AppLocale.text(this, R.string.quick_controls_description))
             .setSmallIcon(R.drawable.ic_lock)
             .setContentIntent(pendingIntent)
             .addAction(
                 R.drawable.ic_lock,
-                getString(R.string.quick_controls_lock),
+                AppLocale.text(this, R.string.quick_controls_lock),
                 activityPendingIntent(1, MainActivity.ACTION_QUICK_LOCK)
             )
             .addAction(
                 R.drawable.ic_volume,
-                getString(R.string.quick_controls_volume),
+                AppLocale.text(this, R.string.quick_controls_volume),
                 activityPendingIntent(2, MainActivity.ACTION_QUICK_VOLUME)
             )
             .setPriority(NotificationCompat.PRIORITY_LOW)

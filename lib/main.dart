@@ -16,7 +16,7 @@ class PowerVolumeApp extends StatelessWidget {
     return ValueListenableBuilder<SupportedLanguage>(
       valueListenable: AppStrings.languageNotifier,
       builder: (context, language, _) => MaterialApp(
-        title: 'Power & Volume',
+        title: 'Power&volume',
         debugShowCheckedModeBanner: false,
         locale: Locale(AppStrings.effectiveLanguageCode == 'tl'
             ? 'fil' : AppStrings.effectiveLanguageCode),

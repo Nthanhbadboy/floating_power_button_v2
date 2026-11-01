@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">この任意のサービスは操作時に画面をロックします。画面の内容や入力文字は読み取りません。ユーザー補助設定で Power &amp; Volume を選んで有効にしてください。</string>
+    <string name="app_name">Power&amp;volume</string>
+    <string name="accessibility_service_description">この任意のサービスは操作時に画面をロックします。画面の内容や入力文字は読み取りません。ユーザー補助設定で Power&amp;volume を選んで有効にしてください。</string>
     <string name="tile_lock_label">画面をロック</string>
     <string name="tile_volume_label">音量</string>
     <string name="shortcut_lock_short">ロック</string>
@@ -10,8 +10,10 @@
     <string name="shortcut_volume_long">音量</string>
     <string name="quick_controls_channel">通知のクイック操作</string>
     <string name="quick_controls_channel_description">この任意のサービスはロックと音量操作の常時通知を表示します。端末の再起動やアプリの更新後に再開する場合があります。いつでもオフにできます。</string>
-    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_title">Power&amp;volume</string>
     <string name="quick_controls_description">通知のクイック操作</string>
     <string name="quick_controls_lock">ロック</string>
     <string name="quick_controls_volume">音量</string>
+    <string name="tile_missing_permission">画面をロックするにはデバイス管理者またはユーザー補助を有効にしてください。</string>
+    <string name="admin_explanation">デバイス管理者: 画面をロック. 無効にすると、画面ロックにユーザー補助が必要になる場合があります。アプリも削除できます。</string>
 </resources>

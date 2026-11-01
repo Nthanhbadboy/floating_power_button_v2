@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">Ce service facultatif verrouille l’écran à votre demande. Il ne lit ni le contenu de l’écran ni le texte saisi. Activez Power &amp; Volume dans les paramètres d’accessibilité.</string>
+    <string name="app_name">Power&amp;volume</string>
+    <string name="accessibility_service_description">Ce service facultatif verrouille l’écran à votre demande. Il ne lit ni le contenu de l’écran ni le texte saisi. Activez Power&amp;volume dans les paramètres d’accessibilité.</string>
     <string name="tile_lock_label">Verrouiller l’écran</string>
     <string name="tile_volume_label">Volume</string>
     <string name="shortcut_lock_short">Verrouiller</string>
@@ -10,8 +10,10 @@
     <string name="shortcut_volume_long">Volume</string>
     <string name="quick_controls_channel">Commandes rapides en notification</string>
     <string name="quick_controls_channel_description">Ce service facultatif affiche une notification permanente avec les commandes de verrouillage et de volume. Il peut redémarrer après un redémarrage ou une mise à jour. Vous pouvez le désactiver à tout moment.</string>
-    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_title">Power&amp;volume</string>
     <string name="quick_controls_description">Commandes rapides en notification</string>
     <string name="quick_controls_lock">Verrouiller</string>
     <string name="quick_controls_volume">Volume</string>
+    <string name="tile_missing_permission">Activez l’administrateur ou l’accessibilité pour verrouiller l’écran.</string>
+    <string name="admin_explanation">Administrateur de l’appareil: Verrouiller l’écran. Après désactivation, le verrouillage peut nécessiter l’accessibilité. Vous pouvez aussi désinstaller l’application.</string>
 </resources>

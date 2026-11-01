@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">Dịch vụ tùy chọn chỉ khóa màn hình khi bạn yêu cầu. Dịch vụ không đọc nội dung màn hình hay văn bản nhập. Để bật, hãy tìm Power &amp; Volume trong cài đặt Trợ năng.</string>
+    <string name="app_name">Power&amp;volume</string>
+    <string name="accessibility_service_description">Dịch vụ tùy chọn chỉ khóa màn hình khi bạn yêu cầu. Dịch vụ không đọc nội dung màn hình hay văn bản nhập. Để bật, hãy tìm Power&amp;volume trong cài đặt Trợ năng.</string>
     <string name="tile_lock_label">Khóa màn hình</string>
     <string name="tile_volume_label">Âm lượng</string>
     <string name="shortcut_lock_short">Khóa</string>
@@ -10,8 +10,10 @@
     <string name="shortcut_volume_long">Âm lượng</string>
     <string name="quick_controls_channel">Điều khiển nhanh trên thông báo</string>
     <string name="quick_controls_channel_description">Dịch vụ tùy chọn hiển thị thông báo liên tục có nút khóa và âm lượng. Dịch vụ có thể tự khởi động lại sau khi máy khởi động hoặc ứng dụng cập nhật. Bạn có thể tắt bất cứ lúc nào.</string>
-    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_title">Power&amp;volume</string>
     <string name="quick_controls_description">Điều khiển nhanh trên thông báo</string>
     <string name="quick_controls_lock">Khóa</string>
     <string name="quick_controls_volume">Âm lượng</string>
+    <string name="tile_missing_permission">Bật Quản trị viên thiết bị hoặc Trợ năng để khóa màn hình.</string>
+    <string name="admin_explanation">Quản trị viên thiết bị: Khóa màn hình. Sau khi tắt, khóa màn hình có thể cần quyền Trợ năng. Bạn cũng có thể gỡ ứng dụng.</string>
 </resources>

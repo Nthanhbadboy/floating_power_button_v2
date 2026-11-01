@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">이 선택 서비스는 요청할 때 화면을 잠급니다. 화면 내용이나 입력한 글자를 읽지 않습니다. 접근성 설정에서 Power &amp; Volume을 찾아 켜세요.</string>
+    <string name="app_name">Power&amp;volume</string>
+    <string name="accessibility_service_description">이 선택 서비스는 요청할 때 화면을 잠급니다. 화면 내용이나 입력한 글자를 읽지 않습니다. 접근성 설정에서 Power&amp;volume을 찾아 켜세요.</string>
     <string name="tile_lock_label">화면 잠금</string>
     <string name="tile_volume_label">음량</string>
     <string name="shortcut_lock_short">잠금</string>
@@ -10,8 +10,10 @@
     <string name="shortcut_volume_long">음량</string>
     <string name="quick_controls_channel">알림 빠른 제어</string>
     <string name="quick_controls_channel_description">이 선택 서비스는 잠금 및 음량 제어가 있는 지속 알림을 표시합니다. 기기 재시작이나 앱 업데이트 후 다시 시작될 수 있으며 언제든 끌 수 있습니다.</string>
-    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_title">Power&amp;volume</string>
     <string name="quick_controls_description">알림 빠른 제어</string>
     <string name="quick_controls_lock">잠금</string>
     <string name="quick_controls_volume">음량</string>
+    <string name="tile_missing_permission">화면을 잠그려면 기기 관리자 또는 접근성을 켜세요.</string>
+    <string name="admin_explanation">기기 관리자: 화면 잠금. 끄면 화면 잠금에 접근성 서비스가 필요할 수 있습니다. 앱을 삭제할 수도 있습니다.</string>
 </resources>

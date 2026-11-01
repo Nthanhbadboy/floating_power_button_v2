@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">Questo servizio facoltativo blocca lo schermo su richiesta. Non legge il contenuto dello schermo né il testo digitato. Attiva Power &amp; Volume nelle impostazioni di accessibilità.</string>
+    <string name="app_name">Power&amp;volume</string>
+    <string name="accessibility_service_description">Questo servizio facoltativo blocca lo schermo su richiesta. Non legge il contenuto dello schermo né il testo digitato. Attiva Power&amp;volume nelle impostazioni di accessibilità.</string>
     <string name="tile_lock_label">Blocca schermo</string>
     <string name="tile_volume_label">Volume</string>
     <string name="shortcut_lock_short">Blocca</string>
@@ -10,8 +10,10 @@
     <string name="shortcut_volume_long">Volume</string>
     <string name="quick_controls_channel">Controlli rapidi nella notifica</string>
     <string name="quick_controls_channel_description">Questo servizio facoltativo mostra una notifica permanente con i controlli di blocco e volume. Può riavviarsi dopo il riavvio del dispositivo o un aggiornamento. Puoi disattivarlo in qualsiasi momento.</string>
-    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_title">Power&amp;volume</string>
     <string name="quick_controls_description">Controlli rapidi nella notifica</string>
     <string name="quick_controls_lock">Blocca</string>
     <string name="quick_controls_volume">Volume</string>
+    <string name="tile_missing_permission">Attiva l’amministratore del dispositivo o l’accessibilità per bloccare lo schermo.</string>
+    <string name="admin_explanation">Amministratore dispositivo: Blocca lo schermo. Dopo la disattivazione il blocco potrebbe richiedere l’accessibilità. Puoi anche disinstallare l’app.</string>
 </resources>

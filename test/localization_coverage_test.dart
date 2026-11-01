@@ -3,6 +3,8 @@ import 'package:floating_power_button/core/common_strings.dart';
 import 'package:floating_power_button/core/critical_strings.dart';
 import 'package:floating_power_button/core/localization.dart';
 import 'package:floating_power_button/core/support_strings.dart';
+import 'package:floating_power_button/core/privacy_translations.dart';
+import 'package:floating_power_button/core/extra_strings.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +17,10 @@ void main() {
       expect(criticalStrings[code], hasLength(13), reason: code);
       expect(commonStrings[code], hasLength(16), reason: code);
       expect(supportStrings[code], hasLength(13), reason: code);
+      expect(extraStrings[code], hasLength(9), reason: code);
+      if (!['en', 'vi', 'zh'].contains(code)) {
+        expect(privacyTranslations[code], isNotEmpty, reason: code);
+      }
       expect(criticalStrings[code]!.every((s) => s.isNotEmpty), isTrue);
       expect(commonStrings[code]!.every((s) => s.isNotEmpty), isTrue);
     }

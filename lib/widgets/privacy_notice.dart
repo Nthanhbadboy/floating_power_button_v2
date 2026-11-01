@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/channel_bridge.dart';
 import '../core/localization.dart';
+import '../core/privacy_translations.dart';
 import '../screens/home_screen.dart';
 
 /// First-run notice for new installations and upgrades from older versions.
@@ -38,7 +39,8 @@ class _PrivacyGateState extends State<PrivacyGate> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: SingleChildScrollView(
+          child: Dialog(
+            child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 480),
@@ -49,8 +51,10 @@ class _PrivacyGateState extends State<PrivacyGate> {
                     alignment: Alignment.centerRight,
                     child: DropdownButton<SupportedLanguage>(
                       value: AppStrings.currentLanguage,
+                      isExpanded: true,
                       items: AppStrings.languageNames.entries.map((entry) =>
-                          DropdownMenuItem(value: entry.key, child: Text(entry.value))).toList(),
+                          DropdownMenuItem(value: entry.key,
+                              child: Text(entry.value, overflow: TextOverflow.ellipsis))).toList(),
                       onChanged: (value) {
                         if (value != null) {
                           setState(() => AppStrings.currentLanguage = value);
@@ -81,8 +85,8 @@ class _PrivacyGateState extends State<PrivacyGate> {
                         _acknowledged = saved;
                       });
                       if (!saved) {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Could not save your choice. Please try again.'),
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(AppStrings.extra(7)),
                         ));
                       }
                     },
@@ -91,6 +95,7 @@ class _PrivacyGateState extends State<PrivacyGate> {
                 ],
               ),
             ),
+          ),
           ),
         ),
       ),
@@ -104,7 +109,7 @@ Future<void> openPrivacyPolicy(BuildContext context, {String? language}) async {
   ));
 }
 
-/// Available offline, including a complete Simplified Chinese text.
+/// Available offline in all 18 supported languages.
 class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
 
@@ -118,8 +123,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   @override
   void initState() {
     super.initState();
-    final code = AppStrings.effectiveLanguageCode;
-    _policyLanguage = code == 'vi' || code == 'zh' ? code : 'en';
+    _policyLanguage = AppStrings.effectiveLanguageCode;
   }
 
   static const _english = '''App name: Power&volume
@@ -176,7 +180,9 @@ Power&volume 用于锁定屏幕和打开系统音量控制。本应用没有账�
   @override
   Widget build(BuildContext context) {
     final content = _policyLanguage == 'zh' ? _chinese :
-        _policyLanguage == 'vi' ? _vietnamese : _english;
+        _policyLanguage == 'vi' ? _vietnamese :
+        _policyLanguage == 'en' ? _english :
+        'Power&volume\nNGUYEN MINH THANH\nalphaplusthanh82@gmail.com\n2026-11-01\n\n${privacyTranslations[_policyLanguage]!}';
     return Scaffold(
       appBar: AppBar(title: Text(AppStrings.critical(0))),
       body: ListView(
@@ -185,23 +191,42 @@ Power&volume 用于锁定屏幕和打开系统音量控制。本应用没有账�
           Text(AppStrings.critical(12)),
           DropdownButton<String>(
             value: _policyLanguage,
+            isExpanded: true,
             items: const [
               DropdownMenuItem(value: 'en', child: Text('English')),
               DropdownMenuItem(value: 'vi', child: Text('Tiếng Việt')),
               DropdownMenuItem(value: 'zh', child: Text('简体中文')),
+              DropdownMenuItem(value: 'es', child: Text('Español')),
+              DropdownMenuItem(value: 'ja', child: Text('日本語')),
+              DropdownMenuItem(value: 'ko', child: Text('한국어')),
+              DropdownMenuItem(value: 'fr', child: Text('Français')),
+              DropdownMenuItem(value: 'de', child: Text('Deutsch')),
+              DropdownMenuItem(value: 'ru', child: Text('Русский')),
+              DropdownMenuItem(value: 'pt', child: Text('Português')),
+              DropdownMenuItem(value: 'id', child: Text('Bahasa Indonesia')),
+              DropdownMenuItem(value: 'ar', child: Text('العربية')),
+              DropdownMenuItem(value: 'hi', child: Text('हिन्दी')),
+              DropdownMenuItem(value: 'it', child: Text('Italiano')),
+              DropdownMenuItem(value: 'nl', child: Text('Nederlands')),
+              DropdownMenuItem(value: 'pl', child: Text('Polski')),
+              DropdownMenuItem(value: 'cs', child: Text('Čeština')),
+              DropdownMenuItem(value: 'tl', child: Text('Tagalog')),
             ],
             onChanged: (value) {
               if (value != null) setState(() => _policyLanguage = value);
             },
           ),
-          SelectableText(content, style: const TextStyle(fontSize: 15, height: 1.5)),
+          Directionality(
+            textDirection: _policyLanguage == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+            child: SelectableText(content, style: const TextStyle(fontSize: 15, height: 1.5)),
+          ),
           const SizedBox(height: 20),
           OutlinedButton.icon(
             onPressed: () async {
               final opened = await ChannelBridge.openPrivacyPolicy();
               if (!opened && context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Could not open a browser.'),
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(AppStrings.extra(8)),
                 ));
               }
             },

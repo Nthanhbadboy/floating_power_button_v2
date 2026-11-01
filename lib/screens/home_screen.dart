@@ -98,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       }
       return;
     }
-    final code = AppStrings.effectiveLanguageCode;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -127,8 +126,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (!started) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
-          code == 'vi' ? 'Không thể bật dịch vụ. Vui lòng thử lại.' :
-          code == 'zh' ? '无法启动服务，请重试。' : 'Could not start the service. Please try again.',
+          AppStrings.extra(5),
         )));
       }
       return;
@@ -462,7 +460,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             constraints: const BoxConstraints(minWidth: 38, minHeight: 38),
             padding: const EdgeInsets.all(6),
             icon: const Icon(Icons.refresh, size: 20),
-            tooltip: 'Refresh',
+            tooltip: AppStrings.extra(6),
             onPressed: _refreshState,
           ),
           const SizedBox(width: 4),
@@ -611,7 +609,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   /// 2. Device-Specific Background Protection Summary Card: Jumps directly to OEM guidance
   Widget _buildDeviceGuideSummaryCard() {
     final dev = _deviceInfo;
-    final devName = dev?.friendlyName ?? 'Huawei Mate 20X';
+    final devName = dev?.friendlyName ?? 'Android';
 
     return Container(
       decoration: BoxDecoration(

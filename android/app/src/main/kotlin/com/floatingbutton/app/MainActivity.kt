@@ -64,7 +64,17 @@ class MainActivity : FlutterActivity() {
                 "setSelectedLanguage" -> {
                     val language = call.argument<String>("language") ?: "system"
                     val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
-                    result.success(prefs.edit().putString("selected_language", language).commit())
+                    val saved = prefs.edit().putString("selected_language", language).commit()
+                    // Only refresh an already-running, user-enabled service; never start it
+                    // just because the language changed.
+                    if (saved && KeepAliveService.isRunning) {
+                        try {
+                            startService(Intent(this, KeepAliveService::class.java).apply {
+                                action = KeepAliveService.ACTION_START
+                            })
+                        } catch (_: Exception) { /* It will update when next started. */ }
+                    }
+                    result.success(saved)
                 }
 
                 "hasAcknowledgedPrivacy" -> {
@@ -132,7 +142,7 @@ class MainActivity : FlutterActivity() {
                             putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, component)
                             putExtra(
                                 DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                                "Device Administrator lets this app lock the screen. You can disable it in the app."
+                                AppLocale.text(this@MainActivity, R.string.admin_explanation)
                             )
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         }

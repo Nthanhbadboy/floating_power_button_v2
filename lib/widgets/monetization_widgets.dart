@@ -409,14 +409,14 @@ class _SupportDialogState extends State<SupportDialog> with SingleTickerProvider
                     color: const Color(0xFFFF4800),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.payment, color: Colors.white, size: 18),
-                      SizedBox(width: 8),
+                      const Icon(Icons.payment, color: Colors.white, size: 18),
+                      const SizedBox(width: 8),
                       Text(
-                        'Payoneer Global Support',
-                        style: TextStyle(
+                        AppStrings.payoneerTab,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 13,

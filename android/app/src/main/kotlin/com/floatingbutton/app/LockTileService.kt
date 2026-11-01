@@ -14,7 +14,7 @@ class LockTileService : TileService() {
         if (!success) {
             Toast.makeText(
                 this,
-                "Please enable Accessibility Service for Power & Volume in Settings",
+                AppLocale.text(this, R.string.tile_missing_permission),
                 Toast.LENGTH_LONG
             ).show()
         }

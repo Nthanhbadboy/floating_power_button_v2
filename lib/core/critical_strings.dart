@@ -10,10 +10,10 @@ const Map<String, List<String>> criticalStrings = {
     "Cancel",
     "Enable",
     "Accessibility service",
-    "This optional service locks the screen when you request it. It does not read screen content or typed text. To enable it, find Power & Volume in Accessibility settings.",
+    "This optional service locks the screen when you request it. It does not read screen content or typed text. To enable it, find Power&volume in Accessibility settings.",
     "Agree & open settings",
     "Notifications are required for quick controls. The service was not started.",
-    "Full policy available in English, Vietnamese and Simplified Chinese."
+    "Choose a policy language"
   ],
   "vi": [
     "Chính sách quyền riêng tư",
@@ -25,10 +25,10 @@ const Map<String, List<String>> criticalStrings = {
     "Hủy",
     "Bật",
     "Dịch vụ trợ năng",
-    "Dịch vụ tùy chọn chỉ khóa màn hình khi bạn yêu cầu. Dịch vụ không đọc nội dung màn hình hay văn bản nhập. Để bật, hãy tìm Power & Volume trong cài đặt Trợ năng.",
+    "Dịch vụ tùy chọn chỉ khóa màn hình khi bạn yêu cầu. Dịch vụ không đọc nội dung màn hình hay văn bản nhập. Để bật, hãy tìm Power&volume trong cài đặt Trợ năng.",
     "Đồng ý và mở cài đặt",
     "Cần cho phép thông báo để dùng điều khiển nhanh. Dịch vụ chưa được bật.",
-    "Toàn văn chính sách có bằng tiếng Anh, tiếng Việt và tiếng Trung giản thể."
+    "Chọn ngôn ngữ chính sách"
   ],
   "zh": [
     "隐私政策",
@@ -40,10 +40,10 @@ const Map<String, List<String>> criticalStrings = {
     "取消",
     "启用",
     "无障碍服务",
-    "此可选服务仅在您请求时锁定屏幕，不读取屏幕内容或输入的文字。请在无障碍设置中找到 Power & Volume 并启用。",
+    "此可选服务仅在您请求时锁定屏幕，不读取屏幕内容或输入的文字。请在无障碍设置中找到 Power&volume 并启用。",
     "同意并打开设置",
     "快捷控制需要通知权限，服务尚未启动。",
-    "完整隐私政策提供英语、越南语和简体中文版本。"
+    "选择隐私政策语言"
   ],
   "es": [
     "Política de privacidad",
@@ -55,10 +55,10 @@ const Map<String, List<String>> criticalStrings = {
     "Cancelar",
     "Activar",
     "Servicio de accesibilidad",
-    "Este servicio opcional bloquea la pantalla cuando lo solicitas. No lee el contenido de la pantalla ni el texto escrito. Busca Power & Volume en los ajustes de accesibilidad para activarlo.",
+    "Este servicio opcional bloquea la pantalla cuando lo solicitas. No lee el contenido de la pantalla ni el texto escrito. Busca Power&volume en los ajustes de accesibilidad para activarlo.",
     "Aceptar y abrir ajustes",
     "Se necesitan notificaciones para los controles rápidos. El servicio no se ha iniciado.",
-    "La política completa está disponible en inglés, vietnamita y chino simplificado."
+    "Elige el idioma de la política"
   ],
   "ja": [
     "プライバシーポリシー",
@@ -70,10 +70,10 @@ const Map<String, List<String>> criticalStrings = {
     "キャンセル",
     "有効にする",
     "ユーザー補助サービス",
-    "この任意のサービスは操作時に画面をロックします。画面の内容や入力文字は読み取りません。ユーザー補助設定で Power & Volume を選んで有効にしてください。",
+    "この任意のサービスは操作時に画面をロックします。画面の内容や入力文字は読み取りません。ユーザー補助設定で Power&volume を選んで有効にしてください。",
     "同意して設定を開く",
     "クイック操作には通知の許可が必要です。サービスは開始されていません。",
-    "全文は英語、ベトナム語、簡体字中国語で提供しています。"
+    "ポリシーの言語を選択"
   ],
   "ko": [
     "개인정보 처리방침",
@@ -85,10 +85,10 @@ const Map<String, List<String>> criticalStrings = {
     "취소",
     "켜기",
     "접근성 서비스",
-    "이 선택 서비스는 요청할 때 화면을 잠급니다. 화면 내용이나 입력한 글자를 읽지 않습니다. 접근성 설정에서 Power & Volume을 찾아 켜세요.",
+    "이 선택 서비스는 요청할 때 화면을 잠급니다. 화면 내용이나 입력한 글자를 읽지 않습니다. 접근성 설정에서 Power&volume을 찾아 켜세요.",
     "동의하고 설정 열기",
     "빠른 제어에는 알림 권한이 필요합니다. 서비스가 시작되지 않았습니다.",
-    "전체 정책은 영어, 베트남어, 중국어 간체로 제공됩니다."
+    "정책 언어 선택"
   ],
   "fr": [
     "Politique de confidentialité",
@@ -100,10 +100,10 @@ const Map<String, List<String>> criticalStrings = {
     "Annuler",
     "Activer",
     "Service d’accessibilité",
-    "Ce service facultatif verrouille l’écran à votre demande. Il ne lit ni le contenu de l’écran ni le texte saisi. Activez Power & Volume dans les paramètres d’accessibilité.",
+    "Ce service facultatif verrouille l’écran à votre demande. Il ne lit ni le contenu de l’écran ni le texte saisi. Activez Power&volume dans les paramètres d’accessibilité.",
     "Accepter et ouvrir les paramètres",
     "Les notifications sont nécessaires aux commandes rapides. Le service n’a pas démarré.",
-    "La politique complète est disponible en anglais, vietnamien et chinois simplifié."
+    "Choisir la langue de la politique"
   ],
   "de": [
     "Datenschutzerklärung",
@@ -115,10 +115,10 @@ const Map<String, List<String>> criticalStrings = {
     "Abbrechen",
     "Aktivieren",
     "Bedienungshilfendienst",
-    "Dieser optionale Dienst sperrt den Bildschirm auf Ihre Anforderung. Er liest weder Bildschirminhalte noch eingegebenen Text. Aktivieren Sie Power & Volume in den Bedienungshilfen.",
+    "Dieser optionale Dienst sperrt den Bildschirm auf Ihre Anforderung. Er liest weder Bildschirminhalte noch eingegebenen Text. Aktivieren Sie Power&volume in den Bedienungshilfen.",
     "Zustimmen und Einstellungen öffnen",
     "Für die Schnellsteuerung sind Benachrichtigungen erforderlich. Der Dienst wurde nicht gestartet.",
-    "Die vollständige Erklärung ist auf Englisch, Vietnamesisch und vereinfachtem Chinesisch verfügbar."
+    "Sprache der Datenschutzerklärung wählen"
   ],
   "ru": [
     "Политика конфиденциальности",
@@ -130,10 +130,10 @@ const Map<String, List<String>> criticalStrings = {
     "Отмена",
     "Включить",
     "Служба специальных возможностей",
-    "Эта необязательная служба блокирует экран по вашему запросу. Она не читает содержимое экрана или вводимый текст. Включите Power & Volume в настройках специальных возможностей.",
+    "Эта необязательная служба блокирует экран по вашему запросу. Она не читает содержимое экрана или вводимый текст. Включите Power&volume в настройках специальных возможностей.",
     "Согласиться и открыть настройки",
     "Для быстрых действий нужны уведомления. Служба не запущена.",
-    "Полный текст политики доступен на английском, вьетнамском и упрощённом китайском языках."
+    "Выберите язык политики"
   ],
   "pt": [
     "Política de privacidade",
@@ -145,10 +145,10 @@ const Map<String, List<String>> criticalStrings = {
     "Cancelar",
     "Ativar",
     "Serviço de acessibilidade",
-    "Este serviço opcional bloqueia a tela quando solicitado. Ele não lê o conteúdo da tela nem o texto digitado. Ative Power & Volume nas configurações de acessibilidade.",
+    "Este serviço opcional bloqueia a tela quando solicitado. Ele não lê o conteúdo da tela nem o texto digitado. Ative Power&volume nas configurações de acessibilidade.",
     "Concordar e abrir configurações",
     "As notificações são necessárias para os controles rápidos. O serviço não foi iniciado.",
-    "A política completa está disponível em inglês, vietnamita e chinês simplificado."
+    "Escolha o idioma da política"
   ],
   "id": [
     "Kebijakan privasi",
@@ -160,10 +160,10 @@ const Map<String, List<String>> criticalStrings = {
     "Batal",
     "Aktifkan",
     "Layanan aksesibilitas",
-    "Layanan opsional ini mengunci layar saat Anda memintanya. Layanan tidak membaca isi layar atau teks yang diketik. Aktifkan Power & Volume di pengaturan aksesibilitas.",
+    "Layanan opsional ini mengunci layar saat Anda memintanya. Layanan tidak membaca isi layar atau teks yang diketik. Aktifkan Power&volume di pengaturan aksesibilitas.",
     "Setuju dan buka pengaturan",
     "Notifikasi diperlukan untuk kontrol cepat. Layanan tidak dimulai.",
-    "Kebijakan lengkap tersedia dalam bahasa Inggris, Vietnam, dan Tionghoa sederhana."
+    "Pilih bahasa kebijakan"
   ],
   "ar": [
     "سياسة الخصوصية",
@@ -175,10 +175,10 @@ const Map<String, List<String>> criticalStrings = {
     "إلغاء",
     "تفعيل",
     "خدمة إمكانية الوصول",
-    "تقفل هذه الخدمة الاختيارية الشاشة عند طلبك. لا تقرأ محتوى الشاشة أو النص المكتوب. فعّل Power & Volume من إعدادات إمكانية الوصول.",
+    "تقفل هذه الخدمة الاختيارية الشاشة عند طلبك. لا تقرأ محتوى الشاشة أو النص المكتوب. فعّل Power&volume من إعدادات إمكانية الوصول.",
     "الموافقة وفتح الإعدادات",
     "تتطلب أدوات التحكم السريعة السماح بالإشعارات. لم تبدأ الخدمة.",
-    "السياسة الكاملة متاحة بالإنجليزية والفيتنامية والصينية المبسطة."
+    "اختر لغة السياسة"
   ],
   "hi": [
     "गोपनीयता नीति",
@@ -190,10 +190,10 @@ const Map<String, List<String>> criticalStrings = {
     "रद्द करें",
     "चालू करें",
     "सुलभता सेवा",
-    "यह वैकल्पिक सेवा आपके अनुरोध पर स्क्रीन लॉक करती है। यह स्क्रीन की सामग्री या टाइप किया गया पाठ नहीं पढ़ती। सुलभता सेटिंग में Power & Volume चालू करें।",
+    "यह वैकल्पिक सेवा आपके अनुरोध पर स्क्रीन लॉक करती है। यह स्क्रीन की सामग्री या टाइप किया गया पाठ नहीं पढ़ती। सुलभता सेटिंग में Power&volume चालू करें।",
     "सहमत होकर सेटिंग खोलें",
     "त्वरित नियंत्रण के लिए सूचनाएँ आवश्यक हैं। सेवा शुरू नहीं की गई।",
-    "पूरी नीति अंग्रेज़ी, वियतनामी और सरल चीनी में उपलब्ध है।"
+    "नीति की भाषा चुनें"
   ],
   "it": [
     "Informativa sulla privacy",
@@ -205,10 +205,10 @@ const Map<String, List<String>> criticalStrings = {
     "Annulla",
     "Attiva",
     "Servizio di accessibilità",
-    "Questo servizio facoltativo blocca lo schermo su richiesta. Non legge il contenuto dello schermo né il testo digitato. Attiva Power & Volume nelle impostazioni di accessibilità.",
+    "Questo servizio facoltativo blocca lo schermo su richiesta. Non legge il contenuto dello schermo né il testo digitato. Attiva Power&volume nelle impostazioni di accessibilità.",
     "Accetta e apri impostazioni",
     "Le notifiche sono necessarie per i controlli rapidi. Il servizio non è stato avviato.",
-    "L’informativa completa è disponibile in inglese, vietnamita e cinese semplificato."
+    "Scegli la lingua dell’informativa"
   ],
   "nl": [
     "Privacybeleid",
@@ -220,10 +220,10 @@ const Map<String, List<String>> criticalStrings = {
     "Annuleren",
     "Inschakelen",
     "Toegankelijkheidsservice",
-    "Deze optionele service vergrendelt het scherm op verzoek. Hij leest geen scherminhoud of ingevoerde tekst. Schakel Power & Volume in bij de toegankelijkheidsinstellingen.",
+    "Deze optionele service vergrendelt het scherm op verzoek. Hij leest geen scherminhoud of ingevoerde tekst. Schakel Power&volume in bij de toegankelijkheidsinstellingen.",
     "Akkoord en instellingen openen",
     "Meldingen zijn nodig voor snelle bediening. De dienst is niet gestart.",
-    "Het volledige beleid is beschikbaar in het Engels, Vietnamees en vereenvoudigd Chinees."
+    "Kies de taal van het beleid"
   ],
   "pl": [
     "Polityka prywatności",
@@ -235,10 +235,10 @@ const Map<String, List<String>> criticalStrings = {
     "Anuluj",
     "Włącz",
     "Usługa ułatwień dostępu",
-    "Ta opcjonalna usługa blokuje ekran na Twoje żądanie. Nie odczytuje zawartości ekranu ani wpisywanego tekstu. Włącz Power & Volume w ustawieniach ułatwień dostępu.",
+    "Ta opcjonalna usługa blokuje ekran na Twoje żądanie. Nie odczytuje zawartości ekranu ani wpisywanego tekstu. Włącz Power&volume w ustawieniach ułatwień dostępu.",
     "Zgadzam się i otwieram ustawienia",
     "Szybkie sterowanie wymaga powiadomień. Usługa nie została uruchomiona.",
-    "Pełna polityka jest dostępna po angielsku, wietnamsku i chińsku uproszczonym."
+    "Wybierz język polityki"
   ],
   "cs": [
     "Zásady ochrany soukromí",
@@ -250,10 +250,10 @@ const Map<String, List<String>> criticalStrings = {
     "Zrušit",
     "Zapnout",
     "Služba usnadnění",
-    "Tato volitelná služba na požádání zamkne obrazovku. Nečte obsah obrazovky ani zadávaný text. Zapněte Power & Volume v nastavení usnadnění.",
+    "Tato volitelná služba na požádání zamkne obrazovku. Nečte obsah obrazovky ani zadávaný text. Zapněte Power&volume v nastavení usnadnění.",
     "Souhlasit a otevřít nastavení",
     "Rychlé ovládání vyžaduje oznámení. Služba nebyla spuštěna.",
-    "Úplné zásady jsou dostupné v angličtině, vietnamštině a zjednodušené čínštině."
+    "Vyberte jazyk zásad"
   ],
   "tl": [
     "Patakaran sa privacy",
@@ -265,9 +265,9 @@ const Map<String, List<String>> criticalStrings = {
     "Kanselahin",
     "Paganahin",
     "Serbisyo sa accessibility",
-    "Ang opsyonal na serbisyong ito ay nagla-lock ng screen kapag hiniling mo. Hindi nito binabasa ang laman ng screen o ang tina-type na teksto. Paganahin ang Power & Volume sa mga setting ng accessibility.",
+    "Ang opsyonal na serbisyong ito ay nagla-lock ng screen kapag hiniling mo. Hindi nito binabasa ang laman ng screen o ang tina-type na teksto. Paganahin ang Power&volume sa mga setting ng accessibility.",
     "Sumang-ayon at buksan ang settings",
     "Kailangan ang mga abiso para sa mabilis na kontrol. Hindi sinimulan ang serbisyo.",
-    "Available ang buong patakaran sa English, Vietnamese at Simplified Chinese."
+    "Piliin ang wika ng patakaran"
   ]
 };

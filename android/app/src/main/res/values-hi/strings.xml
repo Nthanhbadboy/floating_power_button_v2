@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">यह वैकल्पिक सेवा आपके अनुरोध पर स्क्रीन लॉक करती है। यह स्क्रीन की सामग्री या टाइप किया गया पाठ नहीं पढ़ती। सुलभता सेटिंग में Power &amp; Volume चालू करें।</string>
+    <string name="app_name">Power&amp;volume</string>
+    <string name="accessibility_service_description">यह वैकल्पिक सेवा आपके अनुरोध पर स्क्रीन लॉक करती है। यह स्क्रीन की सामग्री या टाइप किया गया पाठ नहीं पढ़ती। सुलभता सेटिंग में Power&amp;volume चालू करें।</string>
     <string name="tile_lock_label">स्क्रीन लॉक करें</string>
     <string name="tile_volume_label">वॉल्यूम</string>
     <string name="shortcut_lock_short">लॉक</string>
@@ -10,8 +10,10 @@
     <string name="shortcut_volume_long">वॉल्यूम</string>
     <string name="quick_controls_channel">सूचना में त्वरित नियंत्रण</string>
     <string name="quick_controls_channel_description">यह वैकल्पिक सेवा लॉक और वॉल्यूम नियंत्रणों के साथ स्थायी सूचना दिखाती है। डिवाइस फिर चालू होने या ऐप अपडेट होने के बाद यह दोबारा शुरू हो सकती है। आप इसे कभी भी बंद कर सकते हैं।</string>
-    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_title">Power&amp;volume</string>
     <string name="quick_controls_description">सूचना में त्वरित नियंत्रण</string>
     <string name="quick_controls_lock">लॉक</string>
     <string name="quick_controls_volume">वॉल्यूम</string>
+    <string name="tile_missing_permission">स्क्रीन लॉक करने के लिए डिवाइस व्यवस्थापक या सुलभता चालू करें।</string>
+    <string name="admin_explanation">डिवाइस व्यवस्थापक: स्क्रीन लॉक करें. बंद करने के बाद स्क्रीन लॉक के लिए सुलभता की आवश्यकता हो सकती है। आप ऐप अनइंस्टॉल भी कर सकते हैं।</string>
 </resources>

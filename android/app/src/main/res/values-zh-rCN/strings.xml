@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">此可选服务仅在您请求时锁定屏幕，不读取屏幕内容或输入的文字。请在无障碍设置中找到 Power &amp; Volume 并启用。</string>
+    <string name="app_name">Power&amp;volume</string>
+    <string name="accessibility_service_description">此可选服务仅在您请求时锁定屏幕，不读取屏幕内容或输入的文字。请在无障碍设置中找到 Power&amp;volume 并启用。</string>
     <string name="tile_lock_label">锁屏</string>
     <string name="tile_volume_label">音量</string>
     <string name="shortcut_lock_short">锁屏</string>
@@ -10,8 +10,10 @@
     <string name="shortcut_volume_long">音量</string>
     <string name="quick_controls_channel">通知栏快捷控制</string>
     <string name="quick_controls_channel_description">此可选服务会显示包含锁屏和音量按钮的常驻通知。设备重启或应用更新后可能自动启动。您可以随时关闭。</string>
-    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_title">Power&amp;volume</string>
     <string name="quick_controls_description">通知栏快捷控制</string>
     <string name="quick_controls_lock">锁屏</string>
     <string name="quick_controls_volume">音量</string>
+    <string name="tile_missing_permission">请启用设备管理员或无障碍服务以锁定屏幕。</string>
+    <string name="admin_explanation">设备管理员: 锁定屏幕. 停用后，锁屏可能需要无障碍服务。您也可以卸载应用。</string>
 </resources>

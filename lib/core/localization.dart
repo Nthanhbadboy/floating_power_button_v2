@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'critical_strings.dart';
 import 'common_strings.dart';
 import 'support_strings.dart';
+import 'extra_strings.dart';
 import 'channel_bridge.dart';
 
 enum SupportedLanguage {
@@ -44,6 +45,8 @@ class AppStrings {
       (commonStrings[effectiveLanguageCode] ?? commonStrings['en']!)[index];
   static String support(int index) =>
       (supportStrings[effectiveLanguageCode] ?? supportStrings['en']!)[index];
+  static String extra(int index) =>
+      (extraStrings[effectiveLanguageCode] ?? extraStrings['en']!)[index];
 
   static String get effectiveLanguageCode {
     switch (currentLanguage) {
@@ -79,7 +82,7 @@ class AppStrings {
   static bool isVietnamese() => effectiveLanguageCode == 'vi';
 
   // App Title
-  static String get appTitle => 'Power & Volume';
+  static String get appTitle => 'Power&volume';
 
   // Device Tag
   static String get deviceDetected {
@@ -113,11 +116,11 @@ class AppStrings {
 
   static String get quickSetupBtn {
     switch (effectiveLanguageCode) {
-      case 'vi': return 'KÍCH HOẠT NHANH (1-CHẠM)';
-      case 'zh': return '快速设置 (一键)';
+      case 'vi': return 'KÍCH HOẠT NHANH';
+      case 'zh': return '快速设置';
       case 'es': return 'CONFIGURACIÓN RÁPIDA';
-      case 'ja': return 'クイック設定 (ワンタップ)';
-      case 'ko': return '빠른 설정 (원터치)';
+      case 'ja': return 'クイック設定';
+      case 'ko': return '빠른 설정';
       case 'fr': return 'CONFIGURATION RAPIDE';
       case 'de': return 'SCHNELLEINRICHTUNG';
       case 'ru': return 'БЫСТРАЯ НАСТРОЙКА';
@@ -130,7 +133,7 @@ class AppStrings {
       case 'pl': return 'SZYBKA KONFIGURACJA';
       case 'cs': return 'RYCHLÉ NASTAVENÍ';
       case 'tl': return 'MABILIS NA SETUP';
-      default: return 'QUICK SETUP (1-TAP)';
+      default: return 'QUICK SETUP';
     }
   }
 
@@ -237,45 +240,11 @@ class AppStrings {
     }
   }
 
-  static String get deactivateAdminConfirmTitle {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Hủy kích hoạt Quản trị viên?';
-      case 'zh': return '取消激活设备管理器？';
-      default: return 'Deactivate Device Administrator?';
-    }
-  }
+  static String get deactivateAdminConfirmTitle => extra(0);
+  static String get deactivateAdminConfirmDesc => extra(1);
+  static String get cancelBtn => critical(6);
+  static String get confirmBtn => extra(2);
 
-  static String get deactivateAdminConfirmDesc {
-    switch (effectiveLanguageCode) {
-      case 'vi':
-        return 'Sau khi hủy, bạn có thể dễ dàng gỡ cài đặt ứng dụng bất cứ lúc nào. Bạn có chắc muốn hủy không?';
-      case 'zh':
-        return '取消激活后，您可以随时轻松卸载本应用。确定要取消激活吗？';
-      default:
-        return 'After deactivating, you will be able to easily uninstall the application. Do you wish to proceed?';
-    }
-  }
-
-  static String get cancelBtn {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Hủy';
-      case 'zh': return '取消';
-      case 'es': return 'Cancelar';
-      case 'ja': return 'キャンセル';
-      case 'ko': return '취소';
-      default: return 'Cancel';
-    }
-  }
-
-  static String get confirmBtn {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Xác nhận hủy';
-      case 'zh': return '确认取消';
-      default: return 'Confirm';
-    }
-  }
-
-  // Main Action Controls
   static String get lockScreenBtn {
     switch (effectiveLanguageCode) {
       case 'vi': return 'KHÓA MÀN HÌNH';
@@ -299,21 +268,7 @@ class AppStrings {
     }
   }
 
-  static String get lockScreenDesc {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Tắt màn hình ngay lập tức';
-      case 'zh': return '立即关闭屏幕';
-      case 'es': return 'Apagar pantalla al instante';
-      case 'ja': return '瞬時に画面をオフ';
-      case 'ko': return '즉시 화면 끄기';
-      case 'fr': return 'Éteindre l\'écran immédiatement';
-      case 'de': return 'Bildschirm sofort ausschalten';
-      case 'ru': return 'Мгновенное выключение экрана';
-      case 'pt': return 'Desligar a tela instantaneamente';
-      case 'id': return 'Matikan layar secara instan';
-      default: return 'Instant screen lock';
-    }
-  }
+  static String get lockScreenDesc => extra(3);
 
   static String get volumePanelBtn {
     switch (effectiveLanguageCode) {
@@ -338,18 +293,8 @@ class AppStrings {
     }
   }
 
-  static String get volumePanelDesc {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Mở thanh chỉnh âm lượng hệ thống';
-      case 'zh': return '调出系统音量控制滑块';
-      case 'es': return 'Mostrar control deslizante de volumen';
-      case 'ja': return 'システム音量スライダーを表示';
-      case 'ko': return '시스템 볼륨 조절 슬라이더 열기';
-      default: return 'Show system volume slider';
-    }
-  }
+  static String get volumePanelDesc => extra(4);
 
-  // Quick Access Section
   static String get quickAccessTitle {
     switch (effectiveLanguageCode) {
       case 'vi': return 'Tiện ích không cần mở ứng dụng';
@@ -436,21 +381,21 @@ class AppStrings {
       case 'huawei':
         if (effectiveLanguageCode == 'zh') {
           return '1. 打开下方电池设置，找到“应用启动管理”。\n'
-              '2. 找到 Power & Volume，关闭“自动管理”，按需允许自动启动、关联启动和后台活动。\n'
+              '2. 找到 Power&volume，关闭“自动管理”，按需允许自动启动、关联启动和后台活动。\n'
               '3. 在最近任务中，若系统支持，可锁定应用卡片。\n'
               '不同版本的名称和选项可能有所不同。';
         }
         return isVietnamese()
             ? '1. Bấm nút bên dưới để mở màn hình Cài đặt Pin Huawei (EMUI).\n'
               '2. Chọn mục: "Khởi chạy ứng dụng" (App launch).\n'
-              '3. Tìm app "Power & Volume" -> Tắt "Tự động quản lý" -> BẬT CẢ 3 CÔNG TẮC:\n'
+              '3. Tìm app "Power&volume" -> Tắt "Tự động quản lý" -> BẬT CẢ 3 CÔNG TẮC:\n'
               '   • Tự khởi chạy (Auto-launch)\n'
               '   • Khởi chạy phụ (Secondary launch)\n'
               '   • Chạy dưới nền (Run in background)\n'
               '4. Trong màn hình Đa nhiệm (Recent Apps): Vuốt nhẹ thẻ app xuống để hiện Ổ khóa 🔒.'
             : '1. Tap button below to open Huawei Battery Settings (EMUI).\n'
               '2. Select: "App launch".\n'
-              '3. Find "Power & Volume" -> Turn OFF "Manage automatically" -> Turn ON all 3:\n'
+              '3. Find "Power&volume" -> Turn OFF "Manage automatically" -> Turn ON all 3:\n'
               '   • Auto-launch\n'
               '   • Secondary launch\n'
               '   • Run in background\n'
@@ -458,22 +403,22 @@ class AppStrings {
       case 'xiaomi':
         return isVietnamese()
             ? '1. Bấm nút bên dưới để mở quản lý Tự khởi chạy (Autostart) của MIUI / HyperOS.\n'
-              '2. BẬT công tắc "Tự khởi chạy" (Autostart) cho Power & Volume.\n'
+              '2. BẬT công tắc "Tự khởi chạy" (Autostart) cho Power&volume.\n'
               '3. Vào Cài đặt ứng dụng -> Tiết kiệm pin -> Chọn "Không hạn chế" (No restrictions).\n'
               '4. Trong màn hình Đa nhiệm: Nhấn giữ thẻ app và chọn biểu tượng Ổ khóa 🔒.'
             : '1. Tap button below to open MIUI / HyperOS Autostart management.\n'
-              '2. Turn ON "Autostart" for Power & Volume.\n'
+              '2. Turn ON "Autostart" for Power&volume.\n'
               '3. Go to App Info -> Battery Saver -> Choose "No restrictions".\n'
               '4. In Recent Apps: Long-press app card and tap Lock icon 🔒.';
       case 'samsung':
         return isVietnamese()
             ? '1. Bấm nút bên dưới để mở Cài đặt Pin Samsung (One UI).\n'
               '2. Vào "Giới hạn sử dụng dưới nền" -> "Ứng dụng không bao giờ ngủ" (Never sleeping apps).\n'
-              '3. Bấm dấu (+) ở góc trên và thêm "Power & Volume" vào danh sách.\n'
+              '3. Bấm dấu (+) ở góc trên và thêm "Power&volume" vào danh sách.\n'
               '4. Trong màn hình Đa nhiệm: Nhấn vào biểu tượng app ở đầu thẻ -> Chọn "Khóa ứng dụng này" 🔒.'
             : '1. Tap button below to open Samsung Battery Settings (One UI).\n'
               '2. Go to "Background usage limits" -> "Never sleeping apps".\n'
-              '3. Tap (+) icon and add "Power & Volume" to the list.\n'
+              '3. Tap (+) icon and add "Power&volume" to the list.\n'
               '4. In Recent Apps: Tap app icon on card header -> Select "Lock this app" 🔒.';
       case 'oppo':
         return isVietnamese()
@@ -488,11 +433,11 @@ class AppStrings {
       case 'vivo':
         return isVietnamese()
             ? '1. Bấm nút bên dưới để mở cài đặt pin Vivo (Funtouch OS / OriginOS).\n'
-              '2. Mở app iManager -> Quản lý ứng dụng -> Tự khởi chạy -> BẬT cho Power & Volume.\n'
-              '3. Vào Cài đặt Pin -> Mức tiêu thụ pin dưới nền cao -> BẬT công tắc cho Power & Volume.\n'
+              '2. Mở app iManager -> Quản lý ứng dụng -> Tự khởi chạy -> BẬT cho Power&volume.\n'
+              '3. Vào Cài đặt Pin -> Mức tiêu thụ pin dưới nền cao -> BẬT công tắc cho Power&volume.\n'
               '4. Trong màn hình Đa nhiệm: Kéo nhẹ thẻ app xuống để khóa 🔒.'
             : '1. Tap button below to open Vivo battery settings (Funtouch OS / OriginOS).\n'
-              '2. Open iManager app -> App manager -> Autostart -> Turn ON for Power & Volume.\n'
+              '2. Open iManager app -> App manager -> Autostart -> Turn ON for Power&volume.\n'
               '3. Go to Battery Settings -> High background power consumption -> Turn ON.\n'
               '4. In Recent Apps: Pull down app card to lock with 🔒.';
       default:
