@@ -102,18 +102,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(code == 'vi' ? 'Bật điều khiển nhanh?' :
-            code == 'zh' ? '启用快捷控制？' : 'Enable quick controls?'),
-        content: Text(code == 'vi'
-            ? 'Dịch vụ tùy chọn này hiển thị thông báo liên tục với nút khóa màn hình và âm lượng. Khi được bật, dịch vụ có thể tự khởi động lại sau khi khởi động máy hoặc cập nhật ứng dụng. Bạn có thể tắt bất cứ lúc nào bằng công tắc này.'
-            : code == 'zh'
-                ? '此可选服务会显示包含锁屏和音量按钮的常驻通知。启用后，它可能在设备重启或应用更新后自动启动。您可以随时使用此开关关闭。'
-                : 'This optional service shows a persistent notification with lock and volume controls. When enabled, it may restart after a device reboot or app update. You can turn it off at any time using this switch.'),
+        title: Text(AppStrings.critical(4)),
+        content: Text(AppStrings.critical(5)),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false),
-              child: Text(code == 'vi' ? 'Hủy' : code == 'zh' ? '取消' : 'Cancel')),
+              child: Text(AppStrings.critical(6))),
           FilledButton(onPressed: () => Navigator.pop(ctx, true),
-              child: Text(code == 'vi' ? 'Bật' : code == 'zh' ? '启用' : 'Enable')),
+              child: Text(AppStrings.critical(7))),
         ],
       ),
     );
@@ -122,6 +117,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     // icon) until POST_NOTIFICATIONS is granted - request it BEFORE starting.
     final notifOk = await ChannelBridge.requestNotificationPermission();
     if (!mounted) return;
+    if (!notifOk) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppStrings.critical(11))),
+      );
+      return;
+    }
     final started = await ChannelBridge.startKeepAliveService();
     if (!started) {
       if (mounted) {
@@ -138,19 +139,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       setState(() {
         _isKeepAliveRunning = running;
       });
-      if (!notifOk) {
-        final isVi = AppStrings.isVietnamese();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              isVi
-                  ? 'Đã bật keep-alive. Hãy cho phép Thông báo để thấy nút điều khiển nhanh trên thanh trạng thái.'
-                  : 'Keep-alive is on. Allow Notifications to see quick controls in the status bar.',
-            ),
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
     }
   }
 
@@ -204,9 +192,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                AppStrings.isVietnamese()
-                    ? 'Vui lòng kích hoạt Device Administrator hoặc Accessibility để khóa màn hình.'
-                    : 'Please activate Device Administrator or Accessibility to lock screen.',
+                AppStrings.common(3),
               ),
               duration: const Duration(seconds: 2),
             ),
@@ -234,7 +220,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   void _showSetupRequiredSheet() {
-    final vi = AppStrings.isVietnamese();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -244,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       ),
       builder: (ctx) => Padding(
         padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
-        child: Column(
+        child: SingleChildScrollView(child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -263,17 +248,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               children: [
                 const Icon(Icons.shield_outlined, color: Color(0xFF1E88E5), size: 28),
                 const SizedBox(width: 12),
-                Text(
-                  vi ? 'Kích hoạt quyền khóa máy' : 'Enable Screen Lock Permission',
+                Expanded(child: Text(
+                  AppStrings.common(1),
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                )),
               ],
             ),
             const SizedBox(height: 12),
             Text(
-              vi
-                  ? 'Để tắt màn hình 0ms và không bao giờ bị hệ thống tắt khi đóng app, vui lòng bật 1 trong 2 quyền dưới đây:'
-                  : 'To enable 0ms screen lock and prevent OS from killing it, activate one of the options below:',
+              AppStrings.common(3),
               style: const TextStyle(fontSize: 14, color: Colors.black87, height: 1.4),
             ),
             const SizedBox(height: 20),
@@ -285,13 +268,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               tileColor: const Color(0xFFE8F5E9),
               leading: const Icon(Icons.verified_user, color: Color(0xFF00C853)),
               title: Text(
-                vi ? 'Cách 1 (Khuyên dùng): Quản trị viên thiết bị' : 'Option 1 (Recommended): Device Admin',
+                AppStrings.common(4),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
               subtitle: Text(
-                vi
-                    ? 'Khóa tức thì 0ms, không đơ giật, không bao giờ bị hỏi lại quyền.'
-                    : 'Instant 0ms lock, zero lag, never revoked by task killers.',
+                AppStrings.common(3),
                 style: const TextStyle(fontSize: 12),
               ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 14),
@@ -309,11 +290,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               tileColor: Colors.grey.shade50,
               leading: const Icon(Icons.accessibility_new, color: Color(0xFF1E88E5)),
               title: Text(
-                vi ? 'Cách 2: Dịch vụ Trợ năng (Accessibility)' : 'Option 2: Accessibility Service',
+                AppStrings.critical(8),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
               subtitle: Text(
-                vi ? 'Dùng tính năng Global Action Lock Screen.' : 'Uses Global Action Lock Screen.',
+                AppStrings.critical(9),
                 style: const TextStyle(fontSize: 12),
               ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 14),
@@ -326,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               },
             ),
           ],
-        ),
+        )),
       ),
     );
   }
@@ -441,6 +422,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               setState(() {
                 AppStrings.currentLanguage = lang;
               });
+              ChannelBridge.setSelectedLanguage(lang.name);
             },
             itemBuilder: (context) => AppStrings.languageNames.entries.map((entry) {
               final isCurrent = AppStrings.currentLanguage == entry.key;
@@ -486,7 +468,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           const SizedBox(width: 4),
         ],
       ),
-      bottomNavigationBar: const BottomAdBanner(),
       body: RefreshIndicator(
         onRefresh: _refreshState,
         child: ListView(
@@ -516,9 +497,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             TextButton.icon(
               onPressed: () => openPrivacyPolicy(context),
               icon: const Icon(Icons.privacy_tip_outlined),
-              label: Text(AppStrings.effectiveLanguageCode == 'vi'
-                  ? 'Chính sách quyền riêng tư'
-                  : AppStrings.effectiveLanguageCode == 'zh' ? '隐私政策' : 'Privacy policy'),
+              label: Text(AppStrings.critical(0)),
             ),
 
             // 6. CREATOR SUPPORT / DONATION CARD (VIETQR VCB 1020506046 & PAYONEER)
@@ -633,7 +612,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   Widget _buildDeviceGuideSummaryCard() {
     final dev = _deviceInfo;
     final devName = dev?.friendlyName ?? 'Huawei Mate 20X';
-    final vi = AppStrings.isVietnamese();
 
     return Container(
       decoration: BoxDecoration(
@@ -671,7 +649,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      vi ? 'Hướng dẫn chạy ngầm dòng máy này' : 'Device-Specific Background Guide',
+                      AppStrings.common(11),
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -697,7 +675,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  vi ? 'Chống tắt ngầm' : 'Anti-Kill',
+                  AppStrings.common(7),
                   style: const TextStyle(
                     color: Color(0xFF1565C0),
                     fontSize: 10.5,
@@ -709,9 +687,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
           const SizedBox(height: 10),
           Text(
-            vi
-                ? 'Thiết lập Khởi chạy ứng dụng (App launch), Không giới hạn pin và Khóa đa nhiệm để app không bao giờ bị hệ thống đóng.'
-                : 'Configure App Launch, Unrestricted Battery, and Lock in Recents to prevent the OS from killing background services.',
+            AppStrings.common(14),
             style: const TextStyle(fontSize: 12.5, height: 1.4, color: Colors.black87),
           ),
           const SizedBox(height: 12),
@@ -727,7 +703,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               ),
               icon: const Icon(Icons.arrow_downward_rounded, size: 16),
               label: Text(
-                vi ? 'Xem hướng dẫn chi tiết dòng máy này ↓' : 'View Step-by-Step Instructions ↓',
+                AppStrings.common(11),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
               ),
               onPressed: _scrollToOemGuide,
@@ -939,7 +915,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             iconColor: Colors.teal,
             title: AppStrings.deviceAdminTitle,
             subtitle: _isDeviceAdminActive
-                ? '${AppStrings.deviceAdminActive} (${AppStrings.isVietnamese() ? 'Chạm để hủy' : 'Tap to deactivate'})'
+                ? AppStrings.deviceAdminActive
                 : AppStrings.deviceAdminInactive,
             isActive: _isDeviceAdminActive,
             onTap: () {
@@ -1219,8 +1195,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   /// 7. Creator Support Section (Independent from Ads)
   Widget _buildSupportSection() {
-    final vi = AppStrings.isVietnamese();
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -1274,7 +1248,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               ),
               icon: const Icon(Icons.favorite, size: 16),
               label: Text(
-                vi ? 'Mở thông tin ủng hộ (VietQR / Payoneer)' : 'Support Developer (Payoneer / VietQR)',
+                AppStrings.supportDeveloperTitle,
                 style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
               ),
               onPressed: () => SupportDialog.show(context),

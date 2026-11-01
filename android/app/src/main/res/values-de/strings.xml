@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Dieser optionale Dienst sperrt den Bildschirm auf Ihre Anforderung. Er liest weder Bildschirminhalte noch eingegebenen Text. Aktivieren Sie Power &amp; Volume in den Bedienungshilfen.</string>
+    <string name="tile_lock_label">Bildschirm sperren</string>
+    <string name="tile_volume_label">Lautstärke</string>
+    <string name="shortcut_lock_short">Sperren</string>
+    <string name="shortcut_lock_long">Bildschirm sperren</string>
+    <string name="shortcut_volume_short">Lautstärke</string>
+    <string name="shortcut_volume_long">Lautstärke</string>
+    <string name="quick_controls_channel">Schnellsteuerung in Benachrichtigung</string>
+    <string name="quick_controls_channel_description">Dieser optionale Dienst zeigt eine dauerhafte Benachrichtigung mit Sperr- und Lautstärkesteuerung. Nach einem Neustart oder Update kann er erneut starten. Sie können ihn jederzeit ausschalten.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Schnellsteuerung in Benachrichtigung</string>
+    <string name="quick_controls_lock">Sperren</string>
+    <string name="quick_controls_volume">Lautstärke</string>
+</resources>

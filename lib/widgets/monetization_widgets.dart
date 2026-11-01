@@ -327,11 +327,7 @@ class _SupportDialogState extends State<SupportDialog> with SingleTickerProvider
                     height: 250,
                     fit: BoxFit.contain,
                     errorBuilder: (ctx, err, stack) {
-                      return Image.network(
-                        'https://img.vietqr.io/image/VCB-1020506046-compact2.png?accountName=NGUYEN%20MINH%20THANH&addInfo=Ung%20ho%20tac%20gia',
-                        height: 250,
-                        fit: BoxFit.contain,
-                      );
+                      return const Icon(Icons.image_not_supported_outlined, size: 64);
                     },
                   ),
                 ),
@@ -356,11 +352,11 @@ class _SupportDialogState extends State<SupportDialog> with SingleTickerProvider
             ),
             child: Column(
               children: [
-                _buildInfoRow('Chủ tài khoản', AppStrings.bankAccountOwner),
+                _buildInfoRow(AppStrings.support(10), AppStrings.bankAccountOwner),
                 const Divider(height: 12),
-                _buildInfoRow('Số tài khoản', AppStrings.bankAccountNumber, isHighlight: true),
+                _buildInfoRow(AppStrings.support(11), AppStrings.bankAccountNumber, isHighlight: true),
                 const Divider(height: 12),
-                _buildInfoRow('Ngân hàng', AppStrings.bankName),
+                _buildInfoRow(AppStrings.support(12), AppStrings.bankName),
               ],
             ),
           ),
@@ -442,8 +438,8 @@ class _SupportDialogState extends State<SupportDialog> with SingleTickerProvider
                   ),
                   child: Column(
                     children: [
-                      const Text(
-                        'Payoneer Account Email',
+                      Text(
+                        AppStrings.copyEmailBtn,
                         style: TextStyle(fontSize: 11, color: Colors.black54),
                       ),
                       const SizedBox(height: 4),

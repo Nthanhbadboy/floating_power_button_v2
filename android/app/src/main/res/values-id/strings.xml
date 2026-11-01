@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Layanan opsional ini mengunci layar saat Anda memintanya. Layanan tidak membaca isi layar atau teks yang diketik. Aktifkan Power &amp; Volume di pengaturan aksesibilitas.</string>
+    <string name="tile_lock_label">Kunci layar</string>
+    <string name="tile_volume_label">Volume</string>
+    <string name="shortcut_lock_short">Kunci</string>
+    <string name="shortcut_lock_long">Kunci layar</string>
+    <string name="shortcut_volume_short">Volume</string>
+    <string name="shortcut_volume_long">Volume</string>
+    <string name="quick_controls_channel">Kontrol cepat pada notifikasi</string>
+    <string name="quick_controls_channel_description">Layanan opsional ini menampilkan notifikasi tetap dengan kontrol kunci dan volume. Layanan dapat dimulai kembali setelah perangkat dimulai ulang atau aplikasi diperbarui. Anda dapat menonaktifkannya kapan saja.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Kontrol cepat pada notifikasi</string>
+    <string name="quick_controls_lock">Kunci</string>
+    <string name="quick_controls_volume">Volume</string>
+</resources>

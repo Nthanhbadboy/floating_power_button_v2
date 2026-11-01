@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Ang opsyonal na serbisyong ito ay nagla-lock ng screen kapag hiniling mo. Hindi nito binabasa ang laman ng screen o ang tina-type na teksto. Paganahin ang Power &amp; Volume sa mga setting ng accessibility.</string>
+    <string name="tile_lock_label">I-lock ang screen</string>
+    <string name="tile_volume_label">Volume</string>
+    <string name="shortcut_lock_short">I-lock</string>
+    <string name="shortcut_lock_long">I-lock ang screen</string>
+    <string name="shortcut_volume_short">Volume</string>
+    <string name="shortcut_volume_long">Volume</string>
+    <string name="quick_controls_channel">Mabilis na kontrol sa abiso</string>
+    <string name="quick_controls_channel_description">Ang opsyonal na serbisyong ito ay nagpapakita ng patuloy na abiso na may kontrol sa lock at volume. Maaari itong muling magsimula pagkatapos i-restart ang device o i-update ang app. Maaari mo itong patayin anumang oras.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Mabilis na kontrol sa abiso</string>
+    <string name="quick_controls_lock">I-lock</string>
+    <string name="quick_controls_volume">Volume</string>
+</resources>

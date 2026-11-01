@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Ta opcjonalna usługa blokuje ekran na Twoje żądanie. Nie odczytuje zawartości ekranu ani wpisywanego tekstu. Włącz Power &amp; Volume w ustawieniach ułatwień dostępu.</string>
+    <string name="tile_lock_label">Zablokuj ekran</string>
+    <string name="tile_volume_label">Głośność</string>
+    <string name="shortcut_lock_short">Zablokuj</string>
+    <string name="shortcut_lock_long">Zablokuj ekran</string>
+    <string name="shortcut_volume_short">Głośność</string>
+    <string name="shortcut_volume_long">Głośność</string>
+    <string name="quick_controls_channel">Szybkie sterowanie w powiadomieniu</string>
+    <string name="quick_controls_channel_description">Ta opcjonalna usługa wyświetla stałe powiadomienie z przyciskami blokady i głośności. Może uruchomić się ponownie po restarcie urządzenia lub aktualizacji. Możesz ją wyłączyć w każdej chwili.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Szybkie sterowanie w powiadomieniu</string>
+    <string name="quick_controls_lock">Zablokuj</string>
+    <string name="quick_controls_volume">Głośność</string>
+</resources>

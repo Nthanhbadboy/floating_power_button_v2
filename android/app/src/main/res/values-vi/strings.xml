@@ -1,21 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">Power &amp; Volume sử dụng dịch vụ này chỉ để thực hiện thao tác khóa màn hình hệ thống (GLOBAL_ACTION_LOCK_SCREEN). Ứng dụng không giám sát, không thu thập và không lưu trữ bất kỳ dữ liệu nào trên màn hình hoặc thao tác phím.</string>
-    
-    <!-- Quick Settings Tiles -->
+    <string name="accessibility_service_description">Dịch vụ tùy chọn chỉ khóa màn hình khi bạn yêu cầu. Dịch vụ không đọc nội dung màn hình hay văn bản nhập. Để bật, hãy tìm Power &amp; Volume trong cài đặt Trợ năng.</string>
     <string name="tile_lock_label">Khóa màn hình</string>
-    <string name="tile_volume_label">Bảng âm lượng</string>
-
-    <!-- App Shortcuts -->
+    <string name="tile_volume_label">Âm lượng</string>
     <string name="shortcut_lock_short">Khóa</string>
     <string name="shortcut_lock_long">Khóa màn hình</string>
     <string name="shortcut_volume_short">Âm lượng</string>
-    <string name="shortcut_volume_long">Bảng âm lượng</string>
-    <string name="quick_controls_channel">Điều khiển nhanh Power &amp; Volume</string>
-    <string name="quick_controls_channel_description">Hiển thị nút khóa và âm lượng trong thông báo</string>
-    <string name="quick_controls_title">Power &amp; Volume đang hoạt động</string>
-    <string name="quick_controls_description">Chạm để mở điều khiển nhanh</string>
+    <string name="shortcut_volume_long">Âm lượng</string>
+    <string name="quick_controls_channel">Điều khiển nhanh trên thông báo</string>
+    <string name="quick_controls_channel_description">Dịch vụ tùy chọn hiển thị thông báo liên tục có nút khóa và âm lượng. Dịch vụ có thể tự khởi động lại sau khi máy khởi động hoặc ứng dụng cập nhật. Bạn có thể tắt bất cứ lúc nào.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Điều khiển nhanh trên thông báo</string>
     <string name="quick_controls_lock">Khóa</string>
     <string name="quick_controls_volume">Âm lượng</string>
 </resources>

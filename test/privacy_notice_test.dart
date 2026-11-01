@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:floating_power_button/widgets/privacy_notice.dart';
+import 'package:floating_power_button/core/localization.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -12,9 +13,12 @@ void main() {
   setUp(() {
     acknowledged = false;
     openCount = 0;
+    AppStrings.currentLanguage = SupportedLanguage.system;
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
       switch (call.method) {
+        case 'getSelectedLanguage': return 'system';
+        case 'setSelectedLanguage': return true;
         case 'hasAcknowledgedPrivacy': return acknowledged;
         case 'acknowledgePrivacy': acknowledged = true; return true;
         case 'openPrivacyPolicy': openCount++; return true;
@@ -34,8 +38,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Privacy policy'), findsOneWidget);
     await tester.tap(find.text('Read privacy policy'));
-    await tester.pump();
-    expect(openCount, 1);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Developer: NGUYEN MINH THANH'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
     expect(acknowledged, isTrue);
@@ -45,11 +51,18 @@ void main() {
   testWidgets('notice can be read in Chinese', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: PrivacyGate()));
     await tester.pumpAndSettle();
-    await tester.tap(find.byType(DropdownButton<String>));
+    await tester.tap(find.byType(DropdownButton<SupportedLanguage>));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('简体中文').last);
+    await tester.tap(find.text('🇨🇳 简体中文').last);
     await tester.pumpAndSettle();
     expect(find.text('阅读隐私政策'), findsOneWidget);
+  });
+
+  testWidgets('Chinese offline policy contains app and developer names', (tester) async {
+    AppStrings.currentLanguage = SupportedLanguage.chinese;
+    await tester.pumpWidget(const MaterialApp(home: PrivacyPolicyScreen()));
+    expect(find.textContaining('应用名称：Power&volume'), findsOneWidget);
+    expect(find.textContaining('开发者：NGUYEN MINH THANH'), findsOneWidget);
   });
 
   testWidgets('acknowledged notice is not repeated', (tester) async {

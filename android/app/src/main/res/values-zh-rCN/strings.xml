@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Power &amp; Volume</string>
-    <string name="accessibility_service_description">Power &amp; Volume 仅使用此无障碍服务执行系统锁屏操作 (GLOBAL_ACTION_LOCK_SCREEN)。本应用绝不监控、收集或存储任何屏幕内容或按键输入。</string>
+    <string name="accessibility_service_description">此可选服务仅在您请求时锁定屏幕，不读取屏幕内容或输入的文字。请在无障碍设置中找到 Power &amp; Volume 并启用。</string>
     <string name="tile_lock_label">锁屏</string>
-    <string name="tile_volume_label">音量面板</string>
+    <string name="tile_volume_label">音量</string>
     <string name="shortcut_lock_short">锁屏</string>
-    <string name="shortcut_lock_long">一键锁屏</string>
+    <string name="shortcut_lock_long">锁屏</string>
     <string name="shortcut_volume_short">音量</string>
-    <string name="shortcut_volume_long">系统音量</string>
-    <string name="quick_controls_channel">Power &amp; Volume 快捷控制</string>
-    <string name="quick_controls_channel_description">在通知中显示锁屏和音量控制</string>
-    <string name="quick_controls_title">Power &amp; Volume 正在运行</string>
-    <string name="quick_controls_description">点按打开快捷控制</string>
+    <string name="shortcut_volume_long">音量</string>
+    <string name="quick_controls_channel">通知栏快捷控制</string>
+    <string name="quick_controls_channel_description">此可选服务会显示包含锁屏和音量按钮的常驻通知。设备重启或应用更新后可能自动启动。您可以随时关闭。</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">通知栏快捷控制</string>
     <string name="quick_controls_lock">锁屏</string>
     <string name="quick_controls_volume">音量</string>
 </resources>

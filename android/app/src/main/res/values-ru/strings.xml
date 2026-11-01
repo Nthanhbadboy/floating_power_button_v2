@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Эта необязательная служба блокирует экран по вашему запросу. Она не читает содержимое экрана или вводимый текст. Включите Power &amp; Volume в настройках специальных возможностей.</string>
+    <string name="tile_lock_label">Блокировка экрана</string>
+    <string name="tile_volume_label">Громкость</string>
+    <string name="shortcut_lock_short">Блокировка</string>
+    <string name="shortcut_lock_long">Блокировка экрана</string>
+    <string name="shortcut_volume_short">Громкость</string>
+    <string name="shortcut_volume_long">Громкость</string>
+    <string name="quick_controls_channel">Быстрые действия в уведомлении</string>
+    <string name="quick_controls_channel_description">Эта необязательная служба показывает постоянное уведомление с кнопками блокировки и громкости. Она может запускаться после перезагрузки или обновления. Её можно отключить в любое время.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Быстрые действия в уведомлении</string>
+    <string name="quick_controls_lock">Блокировка</string>
+    <string name="quick_controls_volume">Громкость</string>
+</resources>

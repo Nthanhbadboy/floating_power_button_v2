@@ -7,7 +7,7 @@
 - Ba APK local đã được xác nhận ký bằng `C:\Users\DELL\.android\debug.keystore`, alias `androiddebugkey`.
 - SHA-256 chứng chỉ của các APK local và keystore: `6D982893A5CF58F3C82E8CF3ECA793013A49007AFF1670EE338484544A996D8C`.
 - **Chưa xác nhận** APK thực tế đã upload lên Huawei/Amazon có cùng chứng chỉ. Huawei App Signing cũng có thể ký lại APK phân phối; cần đối chiếu chứng chỉ APK upload và APK phân phối với thông tin từng cửa hàng.
-- Mã nguồn mới dùng `2.0.1+3` trong `pubspec.yaml` (versionName 2.0.1, versionCode 3). Trước khi phát hành, kiểm tra versionCode 3 lớn hơn mọi bản đã upload cho cùng package. Các bản sau phải tăng tiếp versionCode.
+- Mã nguồn mới dùng `2.0.2+4` trong `pubspec.yaml` (versionName 2.0.2, versionCode 4). Trước khi phát hành, kiểm tra versionCode 4 lớn hơn mọi bản đã upload cho cùng package. Các bản sau phải tăng tiếp versionCode.
 
 Giữ nguyên keystore hiện tại để không vô tình đổi chữ ký. Sao lưu an toàn bên ngoài máy, ưu tiên bản sao được mã hóa. Không commit keystore, chuỗi base64 hoặc mật khẩu vào Git và không chia sẻ chúng qua chat. Alias và fingerprint không phải khóa bí mật.
 

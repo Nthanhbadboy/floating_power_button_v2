@@ -41,6 +41,22 @@ class DeviceInfo {
 class ChannelBridge {
   static const MethodChannel _channel = MethodChannel('com.floatingbutton.app/bridge');
 
+  static Future<String?> getSelectedLanguage() async {
+    try {
+      return await _channel.invokeMethod<String>('getSelectedLanguage');
+    } catch (_) {
+      return null;
+    }
+  }
+
+  static Future<bool> setSelectedLanguage(String language) async {
+    try {
+      return await _channel.invokeMethod<bool>('setSelectedLanguage', {'language': language}) ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
   static Future<bool> hasAcknowledgedPrivacy() async {
     try {
       return await _channel.invokeMethod<bool>('hasAcknowledgedPrivacy') ?? false;

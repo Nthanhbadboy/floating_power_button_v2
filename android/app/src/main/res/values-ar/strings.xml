@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">تقفل هذه الخدمة الاختيارية الشاشة عند طلبك. لا تقرأ محتوى الشاشة أو النص المكتوب. فعّل Power &amp; Volume من إعدادات إمكانية الوصول.</string>
+    <string name="tile_lock_label">قفل الشاشة</string>
+    <string name="tile_volume_label">مستوى الصوت</string>
+    <string name="shortcut_lock_short">قفل</string>
+    <string name="shortcut_lock_long">قفل الشاشة</string>
+    <string name="shortcut_volume_short">مستوى الصوت</string>
+    <string name="shortcut_volume_long">مستوى الصوت</string>
+    <string name="quick_controls_channel">التحكم السريع في الإشعار</string>
+    <string name="quick_controls_channel_description">تعرض هذه الخدمة الاختيارية إشعاراً دائماً بأزرار القفل ومستوى الصوت. قد تبدأ مجدداً بعد إعادة تشغيل الجهاز أو تحديث التطبيق. يمكنك إيقافها في أي وقت.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">التحكم السريع في الإشعار</string>
+    <string name="quick_controls_lock">قفل</string>
+    <string name="quick_controls_volume">مستوى الصوت</string>
+</resources>

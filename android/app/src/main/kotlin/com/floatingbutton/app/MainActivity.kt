@@ -56,14 +56,25 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
+                "getSelectedLanguage" -> {
+                    val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+                    result.success(prefs.getString("selected_language", "system"))
+                }
+
+                "setSelectedLanguage" -> {
+                    val language = call.argument<String>("language") ?: "system"
+                    val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+                    result.success(prefs.edit().putString("selected_language", language).commit())
+                }
+
                 "hasAcknowledgedPrivacy" -> {
                     val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
-                    result.success(prefs.getBoolean("privacy_notice_acknowledged_v1", false))
+                    result.success(prefs.getBoolean("privacy_notice_acknowledged_v2", false))
                 }
 
                 "acknowledgePrivacy" -> {
                     val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
-                    result.success(prefs.edit().putBoolean("privacy_notice_acknowledged_v1", true).commit())
+                    result.success(prefs.edit().putBoolean("privacy_notice_acknowledged_v2", true).commit())
                 }
 
                 "openPrivacyPolicy" -> {
@@ -121,7 +132,7 @@ class MainActivity : FlutterActivity() {
                             putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, component)
                             putExtra(
                                 DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                                "Enable Device Administrator to lock the screen reliably across app-close on Huawei/Xiaomi/Samsung."
+                                "Device Administrator lets this app lock the screen. You can disable it in the app."
                             )
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         }

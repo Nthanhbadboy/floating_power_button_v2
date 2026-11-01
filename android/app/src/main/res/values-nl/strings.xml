@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Deze optionele service vergrendelt het scherm op verzoek. Hij leest geen scherminhoud of ingevoerde tekst. Schakel Power &amp; Volume in bij de toegankelijkheidsinstellingen.</string>
+    <string name="tile_lock_label">Scherm vergrendelen</string>
+    <string name="tile_volume_label">Volume</string>
+    <string name="shortcut_lock_short">Vergrendelen</string>
+    <string name="shortcut_lock_long">Scherm vergrendelen</string>
+    <string name="shortcut_volume_short">Volume</string>
+    <string name="shortcut_volume_long">Volume</string>
+    <string name="quick_controls_channel">Snelle bediening in melding</string>
+    <string name="quick_controls_channel_description">Deze optionele dienst toont een permanente melding met knoppen voor vergrendeling en volume. Hij kan na een herstart of update opnieuw starten. Je kunt hem altijd uitschakelen.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Snelle bediening in melding</string>
+    <string name="quick_controls_lock">Vergrendelen</string>
+    <string name="quick_controls_volume">Volume</string>
+</resources>

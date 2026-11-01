@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Este serviço opcional bloqueia a tela quando solicitado. Ele não lê o conteúdo da tela nem o texto digitado. Ative Power &amp; Volume nas configurações de acessibilidade.</string>
+    <string name="tile_lock_label">Bloquear tela</string>
+    <string name="tile_volume_label">Volume</string>
+    <string name="shortcut_lock_short">Bloquear</string>
+    <string name="shortcut_lock_long">Bloquear tela</string>
+    <string name="shortcut_volume_short">Volume</string>
+    <string name="shortcut_volume_long">Volume</string>
+    <string name="quick_controls_channel">Controles rápidos na notificação</string>
+    <string name="quick_controls_channel_description">Este serviço opcional mostra uma notificação permanente com controles de bloqueio e volume. Ele pode reiniciar após reiniciar o dispositivo ou atualizar o aplicativo. Você pode desativá-lo a qualquer momento.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Controles rápidos na notificação</string>
+    <string name="quick_controls_lock">Bloquear</string>
+    <string name="quick_controls_volume">Volume</string>
+</resources>

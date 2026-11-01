@@ -1,4 +1,8 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'critical_strings.dart';
+import 'common_strings.dart';
+import 'support_strings.dart';
 import 'channel_bridge.dart';
 
 enum SupportedLanguage {
@@ -24,7 +28,22 @@ enum SupportedLanguage {
 }
 
 class AppStrings {
-  static SupportedLanguage currentLanguage = SupportedLanguage.system;
+  static final ValueNotifier<SupportedLanguage> languageNotifier =
+      ValueNotifier<SupportedLanguage>(SupportedLanguage.system);
+
+  static SupportedLanguage get currentLanguage => languageNotifier.value;
+  static set currentLanguage(SupportedLanguage value) => languageNotifier.value = value;
+
+  static SupportedLanguage languageFromName(String? name) =>
+      SupportedLanguage.values.firstWhere((language) => language.name == name,
+          orElse: () => SupportedLanguage.system);
+
+  static String critical(int index) =>
+      (criticalStrings[effectiveLanguageCode] ?? criticalStrings['en']!)[index];
+  static String common(int index) =>
+      (commonStrings[effectiveLanguageCode] ?? commonStrings['en']!)[index];
+  static String support(int index) =>
+      (supportStrings[effectiveLanguageCode] ?? supportStrings['en']!)[index];
 
   static String get effectiveLanguageCode {
     switch (currentLanguage) {
@@ -47,7 +66,8 @@ class AppStrings {
       case SupportedLanguage.czech: return 'cs';
       case SupportedLanguage.tagalog: return 'tl';
       case SupportedLanguage.system:
-        final code = PlatformDispatcher.instance.locale.languageCode.toLowerCase();
+        final deviceCode = PlatformDispatcher.instance.locale.languageCode.toLowerCase();
+        final code = deviceCode == 'fil' ? 'tl' : deviceCode;
         const supported = [
           'vi', 'zh', 'es', 'ja', 'ko', 'fr', 'de', 'ru', 'pt', 'id',
           'ar', 'hi', 'it', 'nl', 'pl', 'cs', 'tl', 'en'
@@ -86,109 +106,10 @@ class AppStrings {
   }
 
   // Diagnostics Banner
-  static String get statusProtectedTitle {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Hệ thống bảo vệ 24/7';
-      case 'zh': return '24/7 全天候受保护';
-      case 'es': return 'Protegido 24/7';
-      case 'ja': return '24時間保護中';
-      case 'ko': return '24/7 보호됨';
-      case 'fr': return 'Protégé 24/7';
-      case 'de': return '24/7 geschützt';
-      case 'ru': return 'Защищено 24/7';
-      case 'pt': return 'Protegido 24/7';
-      case 'id': return 'Terlindungi 24/7';
-      case 'ar': return 'محمي على مدار 24/7';
-      case 'hi': return '24/7 सुरक्षित';
-      case 'it': return 'Protetto 24/7';
-      case 'nl': return '24/7 beschermd';
-      case 'pl': return 'Chronione 24/7';
-      case 'cs': return 'Chráněno 24/7';
-      case 'tl': return 'Protektado 24/7';
-      default: return 'Protected 24/7';
-    }
-  }
-
-  static String statusProtectedSubtitle(String deviceName) {
-    switch (effectiveLanguageCode) {
-      case 'vi':
-        return 'Dịch vụ luôn hoạt động ổn định trên $deviceName, không bị tắt khi vuốt đóng app.';
-      case 'zh':
-        return '后台服务在 $deviceName 上稳定运行，清理后台任务也不会被关闭。';
-      case 'es':
-        return 'Los servicios permanecen activos en $deviceName, inmunes al cierre en recientes.';
-      case 'ja':
-        return '$deviceName でバックグラウンドサービスが常に安定して動作し、終了時も停止しません。';
-      case 'ko':
-        return '$deviceName 에서 백그라운드 서비스가 안정적으로 작동하며 꺼지지 않습니다.';
-      case 'fr':
-        return 'Les services restent actifs sur $deviceName, protégés contre l\'arrêt.';
-      case 'de':
-        return 'Dienste bleiben auf $deviceName aktiv und werden beim Schließen nicht beendet.';
-      case 'ru':
-        return 'Служба стабильно работает на $deviceName и не закрывается при свайпе.';
-      case 'pt':
-        return 'Os serviços permanecem ativos no $deviceName, imunes ao encerramento.';
-      case 'id':
-        return 'Layanan tetap aktif di $deviceName, tidak mati saat aplikasi ditutup.';
-      case 'ar':
-        return 'الخدمات نشطة دائماً على $deviceName ولا تتوقف عند إغلاق التطبيق.';
-      case 'hi':
-        return '$deviceName पर सेवाएं सक्रिय रहती हैं और ऐप बंद करने पर भी चालू रहती हैं।';
-      case 'it':
-        return 'I servizi restano attivi su $deviceName senza terminare alla chiusura.';
-      case 'nl':
-        return 'Services blijven actief op $deviceName, immuun voor afsluiten.';
-      case 'pl':
-        return 'Usługi pozostają aktywne na $deviceName po zamknięciu aplikacji.';
-      case 'cs':
-        return 'Služby zůstávají aktivní na $deviceName i po zavření aplikace.';
-      case 'tl':
-        return 'Ang mga serbisyo ay nananatiling aktibo sa $deviceName kahit isara ang app.';
-      default:
-        return 'Services remain active on $deviceName, immune to swipe-to-kill.';
-    }
-  }
-
-  static String get statusSetupTitle {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Cần thiết lập để hoạt động ổn định';
-      case 'zh': return '需要设置以确保稳定运行';
-      case 'es': return 'Configuración requerida para estabilidad';
-      case 'ja': return '安定動作のための設定が必要です';
-      case 'ko': return '안정적인 작동을 위해 설정이 필요합니다';
-      case 'fr': return 'Configuration requise pour la stabilité';
-      case 'de': return 'Einrichtung erforderlich';
-      case 'ru': return 'Требуется настройка для стабильной работы';
-      case 'pt': return 'Configuração necessária';
-      case 'id': return 'Perlu Pengaturan untuk Stabilitas';
-      case 'ar': return 'مطلوب الإعداد لضمان التشغيل المستقر';
-      case 'hi': return 'स्थिर संचालन के लिए सेटअप आवश्यक है';
-      case 'it': return 'Configurazione richiesta';
-      case 'nl': return 'Configuratie vereist';
-      case 'pl': return 'Wymagana konfiguracja';
-      case 'cs': return 'Nutná konfigurace';
-      case 'tl': return 'Kailangan ang setup para sa katatagan';
-      default: return 'Setup Required for Reliability';
-    }
-  }
-
-  static String get statusSetupSubtitle {
-    switch (effectiveLanguageCode) {
-      case 'vi':
-        return 'Chưa đủ quyền để khóa màn hình hoặc chống tắt ngầm. Nhấn nút bên dưới để cấp quyền ngay.';
-      case 'zh':
-        return '缺少锁屏或后台保护权限。请点击下方按钮快速配置。';
-      case 'es':
-        return 'Faltan permisos para bloquear pantalla o segundo plano. Toque abajo.';
-      case 'ja':
-        return '画面ロックまたはバックグラウンド保護の権限が不足しています。下をタップしてください。';
-      case 'ko':
-        return '화면 잠금 또는 백그라운드 보호 권한이 없습니다. 아래를 누르세요.';
-      default:
-        return 'Permissions missing for screen lock or kill protection. Tap below to set up now.';
-    }
-  }
+  static String get statusProtectedTitle => common(0);
+  static String statusProtectedSubtitle(String deviceName) => common(2);
+  static String get statusSetupTitle => common(1);
+  static String get statusSetupSubtitle => common(3);
 
   static String get quickSetupBtn {
     switch (effectiveLanguageCode) {
@@ -279,24 +200,24 @@ class AppStrings {
 
   static String get adminActivatedBadge {
     switch (effectiveLanguageCode) {
-      case 'vi': return 'ĐÃ KÍCH HOẠT (0ms)';
-      case 'zh': return '已激活 (0ms)';
-      case 'es': return 'ACTIVO (0ms)';
-      case 'ja': return '有効 (0ms)';
-      case 'ko': return '활성화됨 (0ms)';
-      case 'fr': return 'ACTIF (0ms)';
-      case 'de': return 'AKTIV (0ms)';
-      case 'ru': return 'АКТИВНО (0мс)';
-      case 'pt': return 'ATIVO (0ms)';
-      case 'id': return 'AKTIF (0ms)';
+      case 'vi': return 'ĐÃ KÍCH HOẠT';
+      case 'zh': return '已激活';
+      case 'es': return 'ACTIVO';
+      case 'ja': return '有効';
+      case 'ko': return '활성화됨';
+      case 'fr': return 'ACTIF';
+      case 'de': return 'AKTIV';
+      case 'ru': return 'АКТИВНО';
+      case 'pt': return 'ATIVO';
+      case 'id': return 'AKTIF';
       case 'ar': return 'نشط (0 مللي ثانية)';
-      case 'hi': return 'सक्रिय (0ms)';
-      case 'it': return 'ATTIVO (0ms)';
-      case 'nl': return 'ACTIEF (0ms)';
-      case 'pl': return 'AKTYWNY (0ms)';
-      case 'cs': return 'AKTIVNÍ (0ms)';
-      case 'tl': return 'AKTIBO (0ms)';
-      default: return 'ACTIVE (0ms)';
+      case 'hi': return 'सक्रिय';
+      case 'it': return 'ATTIVO';
+      case 'nl': return 'ACTIEF';
+      case 'pl': return 'AKTYWNY';
+      case 'cs': return 'AKTIVNÍ';
+      case 'tl': return 'AKTIBO';
+      default: return 'ACTIVE';
     }
   }
 
@@ -380,17 +301,17 @@ class AppStrings {
 
   static String get lockScreenDesc {
     switch (effectiveLanguageCode) {
-      case 'vi': return 'Tắt màn hình ngay lập tức (0ms)';
-      case 'zh': return '立即关闭屏幕 (0ms)';
-      case 'es': return 'Apagar pantalla al instante (0ms)';
-      case 'ja': return '瞬時に画面をオフ (0ms)';
-      case 'ko': return '즉시 화면 끄기 (0ms)';
-      case 'fr': return 'Éteindre l\'écran immédiatement (0ms)';
-      case 'de': return 'Bildschirm sofort ausschalten (0ms)';
-      case 'ru': return 'Мгновенное выключение экрана (0мс)';
-      case 'pt': return 'Desligar a tela instantaneamente (0ms)';
-      case 'id': return 'Matikan layar secara instan (0ms)';
-      default: return 'Instant screen lock (0ms)';
+      case 'vi': return 'Tắt màn hình ngay lập tức';
+      case 'zh': return '立即关闭屏幕';
+      case 'es': return 'Apagar pantalla al instante';
+      case 'ja': return '瞬時に画面をオフ';
+      case 'ko': return '즉시 화면 끄기';
+      case 'fr': return 'Éteindre l\'écran immédiatement';
+      case 'de': return 'Bildschirm sofort ausschalten';
+      case 'ru': return 'Мгновенное выключение экрана';
+      case 'pt': return 'Desligar a tela instantaneamente';
+      case 'id': return 'Matikan layar secara instan';
+      default: return 'Instant screen lock';
     }
   }
 
@@ -478,40 +399,24 @@ class AppStrings {
   }
 
   // Permissions Header
-  static String get permissionsHeader {
-    switch (effectiveLanguageCode) {
-      case 'vi': return 'Quản lý quyền & Chống tắt ngầm';
-      case 'zh': return '权限管理与防杀后台';
-      case 'es': return 'Permisos y protección en segundo plano';
-      default: return 'Permissions & Keep-Alive Settings';
-    }
-  }
+  static String get permissionsHeader => common(13);
 
-  static String get a11yTitle => isVietnamese() ? 'Dịch vụ trợ năng (Accessibility)' : 'Accessibility Service';
-  static String get a11yActive => isVietnamese() ? 'Đang hoạt động (Khóa qua Global Action)' : 'Active (Global Action lock)';
-  static String get a11yInactive => isVietnamese() ? 'Chưa bật trong Cài đặt' : 'Disabled in Settings';
-
-  static String get deviceAdminTitle => isVietnamese() ? 'Quản trị viên thiết bị (Device Admin)' : 'Device Administrator';
-  static String get deviceAdminActive => isVietnamese() ? 'Đã kích hoạt (Khóa phần cứng 0ms)' : 'Active (Hardware 0ms lock)';
-  static String get deviceAdminInactive => isVietnamese() ? 'Chưa kích hoạt (Nên bật để chống bị tắt)' : 'Inactive (Recommended to prevent kill)';
-
-  static String get keepAliveTitle => isVietnamese() ? 'Điều khiển nhanh trên thông báo' :
-      effectiveLanguageCode == 'zh' ? '通知栏快捷控制' : 'Notification quick controls';
-  static String get keepAliveDesc => isVietnamese()
-      ? 'Tùy chọn: hiển thị thông báo liên tục với nút khóa và âm lượng.'
-      : effectiveLanguageCode == 'zh' ? '可选：显示包含锁屏和音量按钮的常驻通知。'
-      : 'Optional: show a persistent notification with lock and volume controls.';
-
-  static String get batteryOptTitle => isVietnamese() ? 'Bỏ qua tối ưu hóa pin' : 'Ignore Battery Optimization';
-  static String get batteryOptActive => isVietnamese() ? 'Đã cho phép không hạn chế' : 'Unrestricted';
-  static String get batteryOptInactive => isVietnamese() ? 'Đang bị tối ưu hóa (Nên tắt)' : 'Optimized by system (Tap to disable)';
+  static String get a11yTitle => critical(8);
+  static String get a11yActive => common(5);
+  static String get a11yInactive => common(6);
+  static String get deviceAdminTitle => common(4);
+  static String get deviceAdminActive => common(5);
+  static String get deviceAdminInactive => common(6);
+  static String get keepAliveTitle => common(10);
+  static String get keepAliveDesc => critical(5);
+  static String get batteryOptTitle => common(7);
+  static String get batteryOptActive => common(8);
+  static String get batteryOptInactive => common(9);
 
   // OEM Guidance Section
-  static String get oemGuideHeader => isVietnamese() ? 'Hướng dẫn chi tiết theo dòng máy' : 'Device-Specific Background Guide';
-  static String get oemGuideSubtitle => isVietnamese()
-      ? 'Đã tự động nhận diện thiết bị của bạn. Bạn cũng có thể chọn hãng máy khác bên dưới:'
-      : 'Auto-detected your device. You can also select another manufacturer below:';
-  static String get autoDetectedTag => isVietnamese() ? 'Máy của bạn' : 'Your Device';
+  static String get oemGuideHeader => common(11);
+  static String get oemGuideSubtitle => common(14);
+  static String get autoDetectedTag => common(12);
 
   static String get oemHuawei => 'Huawei / Honor';
   static String get oemXiaomi => 'Xiaomi / Redmi / POCO';
@@ -520,11 +425,21 @@ class AppStrings {
   static String get oemVivo => 'Vivo / iQOO';
   static String get oemStock => 'Google / Stock Android';
 
-  static String oemStepTitle(String oem) => isVietnamese() ? 'Các bước thiết lập cho $oem:' : 'Setup steps for $oem:';
+  static String oemStepTitle(String oem) => '${common(11)}: $oem';
 
   static String getOemInstructions(String oemKey, DeviceInfo? dev) {
+    if (effectiveLanguageCode != 'vi' && effectiveLanguageCode != 'en' &&
+        !(effectiveLanguageCode == 'zh' && oemKey == 'huawei')) {
+      return common(14);
+    }
     switch (oemKey) {
       case 'huawei':
+        if (effectiveLanguageCode == 'zh') {
+          return '1. 打开下方电池设置，找到“应用启动管理”。\n'
+              '2. 找到 Power & Volume，关闭“自动管理”，按需允许自动启动、关联启动和后台活动。\n'
+              '3. 在最近任务中，若系统支持，可锁定应用卡片。\n'
+              '不同版本的名称和选项可能有所不同。';
+        }
         return isVietnamese()
             ? '1. Bấm nút bên dưới để mở màn hình Cài đặt Pin Huawei (EMUI).\n'
               '2. Chọn mục: "Khởi chạy ứng dụng" (App launch).\n'
@@ -594,8 +509,11 @@ class AppStrings {
   }
 
   static String getOemButtonLabel(String oemKey) {
+    if (effectiveLanguageCode != 'vi' && effectiveLanguageCode != 'en') {
+      return common(15);
+    }
     switch (oemKey) {
-      case 'huawei': return isVietnamese() ? 'Mở Cài đặt Pin Huawei (EMUI)' : 'Open Huawei Battery Settings';
+      case 'huawei': return isVietnamese() ? 'Mở Cài đặt Pin Huawei (EMUI)' : effectiveLanguageCode == 'zh' ? '打开华为电池设置' : 'Open Huawei Battery Settings';
       case 'xiaomi': return isVietnamese() ? 'Mở Quản lý Tự khởi chạy MIUI' : 'Open MIUI Autostart Settings';
       case 'samsung': return isVietnamese() ? 'Mở Cài đặt Pin Samsung (One UI)' : 'Open Samsung Battery Settings';
       case 'oppo': return isVietnamese() ? 'Mở Cài đặt ColorOS' : 'Open ColorOS Manager';
@@ -628,35 +546,20 @@ class AppStrings {
   };
 
   // --- Donation & Ad Monetization Strings ---
-  static String get supportDeveloperTitle =>
-      isVietnamese() ? 'Ủng hộ tác giả (Tùy tâm)' : 'Support Developer (Optional)';
-
-  static String get supportDeveloperSubtitle => isVietnamese()
-      ? 'Ứng dụng hoàn toàn miễn phí. Nếu bạn thấy app hữu ích, hãy gửi tặng tác giả 1 ly cà phê qua VietQR hoặc Payoneer!'
-      : 'This utility is 100% free. If you find it helpful, feel free to buy the developer a coffee via Payoneer or VietQR!';
-
-  static String get vietQrTab =>
-      isVietnamese() ? 'Mã VietQR (Việt Nam)' : 'VietQR (Vietnam)';
-
-  static String get payoneerTab =>
-      isVietnamese() ? 'Payoneer (Quốc tế)' : 'Payoneer (International)';
+  static String get supportDeveloperTitle => support(0);
+  static String get supportDeveloperSubtitle => support(1);
+  static String get vietQrTab => support(2);
+  static String get payoneerTab => support(3);
 
   static const String bankAccountOwner = 'NGUYEN MINH THANH';
   static const String bankAccountNumber = '1020506046';
   static const String bankName = 'Vietcombank (Trụ sở CN Hải Phòng)';
   static const String payoneerEmail = 'alphaplus.thanh82@gmail.com';
 
-  static String get copyAccountBtn =>
-      isVietnamese() ? 'Sao chép số tài khoản VCB' : 'Copy Bank Account Number';
-
-  static String get copyEmailBtn =>
-      isVietnamese() ? 'Sao chép Email Payoneer' : 'Copy Payoneer Email';
-
-  static String get copiedSuccessToast =>
-      isVietnamese() ? 'Đã sao chép vào bộ nhớ tạm!' : 'Copied to clipboard!';
-
-  static String get closeBtn =>
-      isVietnamese() ? 'Đóng' : 'Close';
+  static String get copyAccountBtn => support(4);
+  static String get copyEmailBtn => support(5);
+  static String get copiedSuccessToast => support(6);
+  static String get closeBtn => support(7);
 
   static String get adBadge => isVietnamese() ? 'Quảng cáo' : 'Ad';
 
@@ -668,11 +571,6 @@ class AppStrings {
       ? 'Google AdMob / Petal Ads Banner'
       : 'Google AdMob / Petal Ads Banner';
 
-  static String get payoneerGuide => isVietnamese()
-      ? 'Bạn có thể chuyển tiền ủng hộ qua tính năng Pay / Make a Payment của Payoneer đến email trên, hoặc chuyển khoản quốc tế.'
-      : 'Send your support via Payoneer internal transfer (Pay to a recipient) using the email above, or via international card.';
-
-  static String get scanQrGuide => isVietnamese()
-      ? 'Mở ứng dụng ngân hàng bất kỳ (VCB, VietinBank, Techcombank, MB, VPBank...) và quét mã QR này để ủng hộ.'
-      : 'Open your mobile banking app and scan this VietQR code to send direct donation.';
+  static String get payoneerGuide => support(9);
+  static String get scanQrGuide => support(8);
 }

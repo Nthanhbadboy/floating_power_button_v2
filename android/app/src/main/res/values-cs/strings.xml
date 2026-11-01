@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Tato volitelná služba na požádání zamkne obrazovku. Nečte obsah obrazovky ani zadávaný text. Zapněte Power &amp; Volume v nastavení usnadnění.</string>
+    <string name="tile_lock_label">Zamknout obrazovku</string>
+    <string name="tile_volume_label">Hlasitost</string>
+    <string name="shortcut_lock_short">Zamknout</string>
+    <string name="shortcut_lock_long">Zamknout obrazovku</string>
+    <string name="shortcut_volume_short">Hlasitost</string>
+    <string name="shortcut_volume_long">Hlasitost</string>
+    <string name="quick_controls_channel">Rychlé ovládání v oznámení</string>
+    <string name="quick_controls_channel_description">Tato volitelná služba zobrazuje trvalé oznámení s ovládáním zámku a hlasitosti. Po restartu zařízení nebo aktualizaci se může znovu spustit. Kdykoli ji můžete vypnout.</string>
+    <string name="quick_controls_title">Power &amp; Volume</string>
+    <string name="quick_controls_description">Rychlé ovládání v oznámení</string>
+    <string name="quick_controls_lock">Zamknout</string>
+    <string name="quick_controls_volume">Hlasitost</string>
+</resources>
