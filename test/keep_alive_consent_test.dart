@@ -37,14 +37,14 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.byType(Switch), 300);
-    await tester.tap(find.byType(Switch));
+    tester.widget<Switch>(find.byType(Switch)).onChanged!(true);
     await tester.pumpAndSettle();
     expect(find.text('Enable quick controls?'), findsOneWidget);
     await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();
     expect(calls, isNot(contains('startKeepAliveService')));
 
-    await tester.tap(find.byType(Switch));
+    tester.widget<Switch>(find.byType(Switch)).onChanged!(true);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Enable'));
     await tester.pumpAndSettle(const Duration(milliseconds: 400));

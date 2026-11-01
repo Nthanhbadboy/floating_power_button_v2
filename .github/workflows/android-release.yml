@@ -74,7 +74,7 @@ jobs:
         run: |
           set -o pipefail
           if ! flutter test --reporter expanded 2>&1 | tee "$RUNNER_TEMP/flutter-tests.log"; then
-            tail -n 25 "$RUNNER_TEMP/flutter-tests.log" | while IFS= read -r line; do
+            tail -n 80 "$RUNNER_TEMP/flutter-tests.log" | while IFS= read -r line; do
               echo "::error::$line"
             done
             exit 1
