@@ -31,3 +31,8 @@
 -keep class com.huawei.openalliance.ad.** { *; }
 -dontwarn com.huawei.hms.ads.**
 -dontwarn com.huawei.openalliance.ad.**
+
+# Optional Huawei framework/logging references in Petal Ads transitive SDKs;
+# these classes are not present on every Android device.
+-dontwarn com.huawei.android.app.PackageManagerEx
+-dontwarn com.huawei.appgallery.log.LogAdaptor
