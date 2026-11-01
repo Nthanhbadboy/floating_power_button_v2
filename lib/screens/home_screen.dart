@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import '../core/channel_bridge.dart';
 import '../core/localization.dart';
+import '../core/ads_strings.dart';
+import '../widgets/petal_banner.dart';
 import '../widgets/disclosure_dialog.dart';
 import '../widgets/monetization_widgets.dart';
 import '../widgets/privacy_notice.dart';
@@ -20,6 +22,47 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   BuildContext? _oemSectionContext;
   final ScrollController _scrollController = ScrollController();
 
+  bool? _adChoice;
+  bool _adChoiceLoaded = false;
+
+  Future<void> _loadAdChoice() async {
+    final choice = await ChannelBridge.getPetalAdsChoice();
+    if (!mounted) return;
+    setState(() { _adChoice = choice; _adChoiceLoaded = true; });
+    if (choice == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _showAdChoice();
+      });
+    }
+  }
+
+  Future<void> _showAdChoice() async {
+    final strings = adsStrings[AppStrings.effectiveLanguageCode] ?? adsStrings['en']!;
+    final choice = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: Text(strings[0]),
+          content: SingleChildScrollView(child: Text(strings[1])),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(dialogContext, false), child: Text(strings[2])),
+            FilledButton(onPressed: () => Navigator.pop(dialogContext, true), child: Text(strings[3])),
+          ],
+        ),
+      ),
+    );
+    if (!mounted || choice == null) return;
+    // Fail closed: do not construct the SDK view if saving the choice fails.
+    final saved = await ChannelBridge.setPetalAdsChoice(choice);
+    if (!mounted) return;
+    setState(() { _adChoice = saved ? choice : false; });
+    if (!saved) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppStrings.extra(7))));
+    }
+  }
+
   bool _isAccessibilityEnabled = false;
   bool _isServiceConnected = false;
   bool _isDeviceAdminActive = false;
@@ -35,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _refreshState();
+    _loadAdChoice();
   }
 
   @override
@@ -466,6 +510,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           const SizedBox(width: 4),
         ],
       ),
+      bottomNavigationBar: PetalBanner(allowed: _adChoiceLoaded && _adChoice == true),
       body: RefreshIndicator(
         onRefresh: _refreshState,
         child: ListView(
@@ -496,6 +541,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               onPressed: () => openPrivacyPolicy(context),
               icon: const Icon(Icons.privacy_tip_outlined),
               label: Text(AppStrings.critical(0)),
+            ),
+
+            TextButton.icon(
+              onPressed: _adChoiceLoaded ? _showAdChoice : null,
+              icon: const Icon(Icons.ad_units_outlined),
+              label: Text((adsStrings[AppStrings.effectiveLanguageCode] ?? adsStrings['en']!)[4]),
             ),
 
             // 6. CREATOR SUPPORT / DONATION CARD (VIETQR VCB 1020506046 & PAYONEER)

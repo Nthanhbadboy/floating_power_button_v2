@@ -55,6 +55,10 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
+        flutterEngine.platformViewsController.registry.registerViewFactory(
+            "com.floatingbutton.app/petal_banner", PetalBannerFactory()
+        )
+
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
                 "getSelectedLanguage" -> {
@@ -86,6 +90,20 @@ class MainActivity : FlutterActivity() {
                 "acknowledgePrivacy" -> {
                     val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
                     result.success(prefs.edit().putBoolean("privacy_notice_acknowledged_v2", true).commit())
+                }
+
+                "getPetalAdsChoice" -> {
+                    val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+                    result.success(if (prefs.contains("petal_ads_consent_v1"))
+                        prefs.getBoolean("petal_ads_consent_v1", false) else null)
+                }
+
+                "setPetalAdsChoice" -> {
+                    val choice = call.argument<Boolean>("allowed")
+                    if (choice == null) result.success(false) else {
+                        val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+                        result.success(prefs.edit().putBoolean("petal_ads_consent_v1", choice).commit())
+                    }
                 }
 
                 "openPrivacyPolicy" -> {

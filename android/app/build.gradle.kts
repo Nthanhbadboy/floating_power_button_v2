@@ -76,6 +76,8 @@ flutter {
 }
 
 dependencies {
+    // Petal Ads Prime supports Huawei and other Android devices with HMS Core.
+    implementation("com.huawei.hms:ads-prime:3.4.90.300")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.20")
     implementation("androidx.core:core-ktx:1.13.1")
 }

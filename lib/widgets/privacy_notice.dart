@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/channel_bridge.dart';
 import '../core/localization.dart';
+import '../core/ads_strings.dart';
 import '../core/privacy_translations.dart';
 import '../screens/home_screen.dart';
 
@@ -132,7 +133,7 @@ Contact: alphaplusthanh82@gmail.com
 Updated: 1 November 2026
 
 Purpose and information
-Power&volume locks the screen and opens the system volume controls. The app has no account or sign-in. It reads the device manufacturer and model locally to suggest settings, and saves the language, privacy notice acknowledgement and quick-control preference on your device. This version does not include an analytics or advertising SDK. The app itself does not transmit these settings to the developer.
+Power&volume locks the screen and opens the system volume controls. The app has no account or sign-in. It reads the device manufacturer and model locally to suggest settings, and saves the language, privacy notice acknowledgement and quick-control preference on your device. The app itself does not transmit these settings to the developer.
 
 Permissions
 Accessibility is optional and used to lock the screen only when you request it; this app does not read screen contents or typed text. Device administrator is an optional alternative for screen locking and can be disabled in the app. Notifications and the foreground service are optional: after you enable quick controls, a persistent notification provides lock and volume buttons. The service may restart after a reboot or update while enabled. Battery settings are optional and controlled by you in Android settings.
@@ -149,7 +150,7 @@ Liên hệ: alphaplusthanh82@gmail.com
 Cập nhật: 01/11/2026
 
 Mục đích và thông tin
-Power&volume khóa màn hình và mở điều khiển âm lượng hệ thống. Ứng dụng không có tài khoản hoặc đăng nhập. Ứng dụng đọc hãng và mẫu máy tại thiết bị để gợi ý cài đặt; lựa chọn ngôn ngữ, xác nhận đã xem thông báo quyền riêng tư và tùy chọn điều khiển nhanh được lưu trên thiết bị. Phiên bản này không tích hợp SDK phân tích hoặc quảng cáo. Ứng dụng không gửi các cài đặt này cho nhà phát triển.
+Power&volume khóa màn hình và mở điều khiển âm lượng hệ thống. Ứng dụng không có tài khoản hoặc đăng nhập. Ứng dụng đọc hãng và mẫu máy tại thiết bị để gợi ý cài đặt; lựa chọn ngôn ngữ, xác nhận đã xem thông báo quyền riêng tư và tùy chọn điều khiển nhanh được lưu trên thiết bị. Ứng dụng không gửi các cài đặt này cho nhà phát triển.
 
 Quyền truy cập
 Trợ năng là tùy chọn và chỉ dùng để khóa màn hình khi bạn yêu cầu; ứng dụng không đọc nội dung màn hình hoặc văn bản đã nhập. Quản trị viên thiết bị là cách khóa màn hình tùy chọn khác và có thể tắt trong app. Thông báo và dịch vụ tiền cảnh là tùy chọn: sau khi bạn bật điều khiển nhanh, thông báo liên tục hiển thị nút khóa và âm lượng. Dịch vụ có thể khởi động lại sau khi máy khởi động hoặc app cập nhật nếu bạn vẫn bật. Cài đặt pin là tùy chọn do bạn điều chỉnh trong Android.
@@ -166,7 +167,7 @@ Liên hệ NGUYEN MINH THANH qua email trên. Liên kết chính sách trực tu
 更新日期：2026年11月1日
 
 用途和信息
-Power&volume 用于锁定屏幕和打开系统音量控制。本应用没有账户或登录功能。本应用在设备上读取设备制造商和型号，用于提供设置建议；语言选择、隐私提示确认和快捷控制偏好保存在设备上。此版本未集成分析或广告 SDK。本应用不会将这些设置发送给开发者。
+Power&volume 用于锁定屏幕和打开系统音量控制。本应用没有账户或登录功能。本应用在设备上读取设备制造商和型号，用于提供设置建议；语言选择、隐私提示确认和快捷控制偏好保存在设备上。本应用不会将这些设置发送给开发者。
 
 权限用途
 无障碍服务为可选项，仅在您请求时用于锁屏；本应用不读取屏幕内容或输入的文字。设备管理员是可选的另一种锁屏方式，可在应用内关闭。通知和前台服务均为可选项：当您启用快捷控制后，常驻通知将提供锁屏和音量按钮。若保持启用，设备重启或应用更新后服务可能再次启动。电池设置为可选项，由您在 Android 设置中控制。
@@ -218,7 +219,7 @@ Power&volume 用于锁定屏幕和打开系统音量控制。本应用没有账�
           ),
           Directionality(
             textDirection: _policyLanguage == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-            child: SelectableText(content, style: const TextStyle(fontSize: 15, height: 1.5)),
+            child: SelectableText('$content\n\n${adsStrings[_policyLanguage]![1]}\n\nhttps://consumer.huawei.com/en/privacy/privacy-policy/', style: const TextStyle(fontSize: 15, height: 1.5)),
           ),
           const SizedBox(height: 20),
           OutlinedButton.icon(

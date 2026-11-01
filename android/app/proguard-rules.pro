@@ -25,3 +25,9 @@
 -keep class androidx.core.** { *; }
 -dontwarn androidx.**
 -dontwarn kotlinx.coroutines.**
+
+# Petal Ads: Huawei recommends keeping its SDK classes for release builds.
+-keep class com.huawei.hms.ads.** { *; }
+-keep class com.huawei.openalliance.ad.** { *; }
+-dontwarn com.huawei.hms.ads.**
+-dontwarn com.huawei.openalliance.ad.**

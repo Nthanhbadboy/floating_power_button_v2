@@ -83,6 +83,13 @@ jobs:
         run: |
           chmod +x android/gradlew
           flutter build apk --release
+      - name: Upload merged Android manifest for privacy review
+        uses: actions/upload-artifact@v4
+        with:
+          name: Power-Volume-merged-manifest
+          path: build/app/intermediates/merged_manifests/release/processReleaseManifest/AndroidManifest.xml
+          if-no-files-found: warn
+          retention-days: 14
       - name: Verify APK signature
         shell: bash
         run: |

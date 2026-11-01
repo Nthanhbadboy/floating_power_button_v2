@@ -73,6 +73,19 @@ class ChannelBridge {
     }
   }
 
+  // Separate from the general privacy notice; null means no choice yet.
+  static Future<bool?> getPetalAdsChoice() async {
+    try { return await _channel.invokeMethod<bool>('getPetalAdsChoice'); }
+    catch (_) { return null; }
+  }
+
+  static Future<bool> setPetalAdsChoice(bool allowed) async {
+    try {
+      return await _channel.invokeMethod<bool>(
+        'setPetalAdsChoice', {'allowed': allowed}) ?? false;
+    } catch (_) { return false; }
+  }
+
   static Future<bool> openPrivacyPolicy() async {
     try {
       return await _channel.invokeMethod<bool>('openPrivacyPolicy') ?? false;
