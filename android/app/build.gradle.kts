@@ -25,6 +25,38 @@ android {
         targetSdk = 36
         versionCode = 2
         versionName = "2.0.0"
+
+        // AdMob application id. Defaults to Google's TEST id; pass your real one with
+        //   ADMOB_APP_ID=ca-app-pub-XXXX~YYYY in android/gradle.properties (or -P / ORG_GRADLE_PROJECT_ env)
+        manifestPlaceholders["admobAppId"] =
+            (project.findProperty("ADMOB_APP_ID") as String?)
+                ?: "ca-app-pub-3940256099942544~3347511713"
+
+        // Size: ship only ARM ABIs (every real phone) instead of x86/x86_64 as well.
+        // Skipped when Flutter already restricts ABIs (--split-per-abi / --target-platform),
+        // because AGP forbids combining abiFilters with ABI splits.
+        if (!project.hasProperty("split-per-abi") && !project.hasProperty("target-platform")) {
+            ndk {
+                abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+            }
+        }
+    }
+
+    packaging {
+        jniLibs {
+            // Compress native libs inside the APK (libflutter.so / libapp.so are the
+            // bulk of the file) -> much smaller APK download/sideload size.
+            useLegacyPackaging = true
+        }
+        resources {
+            excludes += setOf(
+                "META-INF/*.version",
+                "META-INF/LICENSE*",
+                "META-INF/NOTICE*",
+                "META-INF/DEPENDENCIES",
+                "DebugProbesKt.bin"
+            )
+        }
     }
 
     buildTypes {

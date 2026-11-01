@@ -1,94 +1,141 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import '../core/ad_service.dart';
+import '../core/channel_bridge.dart';
 import '../core/localization.dart';
 
-/// Pinned Bottom Ad Banner Widget
-/// Represents a permanent, production-grade bottom ad container (Google AdMob / Petal Ads banner).
-/// It runs independently and does not have any bypass/cancel buttons, ensuring continuous ad impressions.
-class BottomAdBanner extends StatelessWidget {
+/// Pinned bottom banner showing a REAL Google AdMob adaptive banner.
+///
+/// Nothing is drawn (zero height) until an ad has actually loaded, so the user
+/// never sees an empty / fake "ad" strip. Failed loads are retried with a
+/// back-off, and the banner is skipped when the user chose to remove ads.
+class BottomAdBanner extends StatefulWidget {
   const BottomAdBanner({super.key});
 
   @override
+  State<BottomAdBanner> createState() => _BottomAdBannerState();
+}
+
+class _BottomAdBannerState extends State<BottomAdBanner> {
+  BannerAd? _ad;
+  bool _loaded = false;
+  bool _adsRemoved = false;
+  bool _loading = false;
+  int _width = 0;
+  int _retry = 0;
+  Timer? _retryTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    AdService.ready.addListener(_maybeLoad);
+    ChannelBridge.isAdsRemoved().then((removed) {
+      if (!mounted) return;
+      setState(() => _adsRemoved = removed);
+    });
+    // Kick the SDK (no-op if already started / retries if it failed earlier).
+    AdService.init();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final w = MediaQuery.sizeOf(context).width.truncate();
+    if (w != _width) {
+      _width = w;
+      // Orientation / size changed -> adaptive size must be recomputed.
+      _disposeAd();
+      _maybeLoad();
+    }
+  }
+
+  @override
+  void dispose() {
+    AdService.ready.removeListener(_maybeLoad);
+    _retryTimer?.cancel();
+    _disposeAd();
+    super.dispose();
+  }
+
+  void _disposeAd() {
+    _ad?.dispose();
+    _ad = null;
+    _loaded = false;
+    _loading = false;
+  }
+
+  Future<void> _maybeLoad() async {
+    if (!mounted || _loading || _loaded || _adsRemoved) return;
+    if (!AdService.ready.value || _width <= 0) return;
+    _loading = true;
+
+    final size =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(_width);
+    if (!mounted) return;
+    if (size == null) {
+      _loading = false;
+      _scheduleRetry();
+      return;
+    }
+
+    late final BannerAd ad;
+    ad = BannerAd(
+      adUnitId: AdConfig.bannerUnitId,
+      size: size,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          if (!mounted || !identical(_ad, ad)) return;
+          _retry = 0;
+          setState(() {
+            _loaded = true;
+            _loading = false;
+          });
+        },
+        onAdFailedToLoad: (failed, error) {
+          debugPrint('Banner failed: ${error.code} ${error.message}');
+          failed.dispose();
+          if (!mounted || !identical(_ad, ad)) return;
+          setState(() {
+            _ad = null;
+            _loaded = false;
+            _loading = false;
+          });
+          _scheduleRetry();
+        },
+      ),
+    );
+    _ad = ad;
+    await ad.load();
+  }
+
+  void _scheduleRetry() {
+    _retryTimer?.cancel();
+    // 15s, 30s, 60s, 120s, then every 120s.
+    final seconds = 15 * (1 << (_retry < 3 ? _retry : 3));
+    _retry++;
+    _retryTimer = Timer(Duration(seconds: seconds), _maybeLoad);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final ad = _ad;
+    if (_adsRemoved || !_loaded || ad == null) {
+      return const SizedBox.shrink();
+    }
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: const Color(0xFFFAFAFA),
-        border: Border(
-          top: BorderSide(color: Colors.grey.shade300, width: 1.0),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 6,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
+      color: Colors.white,
       child: SafeArea(
         top: false,
-        child: Container(
-          height: 52,
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          child: Row(
-            children: [
-              // Standard Ad Tag Badge
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Colors.grey.shade400, width: 0.8),
-                ),
-                child: Text(
-                  AppStrings.adBadge,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade700,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-
-              // Ad Content Banner Text
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.adBannerText,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    Text(
-                      AppStrings.adBannerSub,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Small info icon
-              Icon(
-                Icons.info_outline,
-                size: 16,
-                color: Colors.grey.shade400,
-              ),
-            ],
-          ),
+        child: SizedBox(
+          width: ad.size.width.toDouble(),
+          height: ad.size.height.toDouble(),
+          child: AdWidget(ad: ad),
         ),
       ),
     );

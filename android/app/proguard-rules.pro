@@ -22,6 +22,8 @@
 -keep class com.floatingbutton.app.BootCompletedReceiver extends android.content.BroadcastReceiver { *; }
 
 # androidx / kotlin coroutines used by services.
--keep class androidx.core.** { *; }
+# (No blanket keep on androidx.core: it would stop R8 from removing unused code.)
 -dontwarn androidx.**
+
+# Google Mobile Ads / UMP ship their own consumer rules; nothing extra needed.
 -dontwarn kotlinx.coroutines.**

@@ -5,6 +5,7 @@ import android.accessibilityservice.AccessibilityServiceInfo
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -210,6 +211,14 @@ class PowerAccessibilityService : AccessibilityService() {
             Log.w(TAG, "Error configuring serviceInfo", e)
         }
         Log.i(TAG, "PowerAccessibilityService successfully bound and connected.")
+        // Pin the process with the foreground service so closing the UI does not
+        // let the OS reclaim the process that hosts this accessibility service.
+        KeepAliveService.ensureStarted(applicationContext)
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        KeepAliveService.ensureStarted(applicationContext)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {

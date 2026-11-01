@@ -23,6 +23,29 @@ class KeepAliveService : Service() {
         const val ACTION_STOP = "com.floatingbutton.app.ACTION_STOP_KEEP_ALIVE"
 
         var isRunning: Boolean = false
+
+        /**
+         * Starts the foreground service (idempotent) unless the user switched it off.
+         * Having a foreground service keeps the whole app process - and therefore the
+         * AccessibilityService bound inside it - at high priority so the OS does not
+         * reclaim it after the UI is closed.
+         */
+        fun ensureStarted(context: Context) {
+            try {
+                val prefs = context.getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+                if (!prefs.getBoolean("keep_alive_enabled", true)) return
+                val intent = Intent(context, KeepAliveService::class.java).apply {
+                    action = ACTION_START
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(intent)
+                } else {
+                    context.startService(intent)
+                }
+            } catch (e: Exception) {
+                android.util.Log.w("KeepAliveService", "ensureStarted failed", e)
+            }
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -123,6 +146,12 @@ class KeepAliveService : Service() {
         } else {
             startForeground(NOTIFICATION_ID, notification)
         }
+    }
+
+    /** Swiping the app from Recents must not take the foreground service with it. */
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        if (isRunning) ensureStarted(applicationContext)
     }
 
     override fun onDestroy() {
