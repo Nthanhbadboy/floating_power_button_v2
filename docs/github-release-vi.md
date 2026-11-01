@@ -22,8 +22,9 @@ Trên máy Windows chứa **đúng keystore cũ**, mở PowerShell và chép key
 Trong GitHub repository: **Settings → Secrets and variables → Actions → New repository secret**, tạo:
 
 1. `ANDROID_KEYSTORE_BASE64`: dán nội dung clipboard; sau đó xóa clipboard.
-2. `ANDROID_KEYSTORE_PASSWORD`: mật khẩu của keystore hiện tại.
+2. `ANDROID_STORE_PASSWORD`: mật khẩu của keystore hiện tại.
 3. `ANDROID_KEY_PASSWORD`: mật khẩu của alias hiện tại.
+4. `ANDROID_KEY_ALIAS`: alias của keystore hiện tại (`androiddebugkey`).
 
 Không gửi các giá trị này qua chat. Nếu dùng GitHub CLI để thiết lập, không đưa giá trị vào đối số dòng lệnh hay lịch sử shell. Secrets không tự chia sẻ sang fork, nên phải cấu hình tại đúng repository chạy workflow. Đảm bảo GitHub Actions được bật.
 

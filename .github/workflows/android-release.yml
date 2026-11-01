@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
-      ANDROID_KEY_ALIAS: androiddebugkey
-      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       EXPECTED_SHA256: 6D982893A5CF58F3C82E8CF3ECA793013A49007AFF1670EE338484544A996D8C
     steps:
@@ -38,10 +38,11 @@ jobs:
         run: |
           set -euo pipefail
           missing=0
-          for name in ENCODED_KEYSTORE ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_PASSWORD; do
+          for name in ENCODED_KEYSTORE ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_PASSWORD ANDROID_KEY_ALIAS; do
             if [[ -z "${!name}" ]]; then
               case "$name" in
                 ENCODED_KEYSTORE) secret_name=ANDROID_KEYSTORE_BASE64 ;;
+                ANDROID_KEYSTORE_PASSWORD) secret_name=ANDROID_STORE_PASSWORD ;;
                 *) secret_name="$name" ;;
               esac
               echo "::error::Missing GitHub Actions secret: $secret_name"
@@ -58,7 +59,7 @@ jobs:
           echo "ANDROID_KEYSTORE_PATH=$KEYSTORE" >> "$GITHUB_ENV"
           if ! keytool_output=$(keytool -list -v -keystore "$KEYSTORE" -alias "$ANDROID_KEY_ALIAS" \
             -storepass:env ANDROID_KEYSTORE_PASSWORD 2>/dev/null); then
-            echo '::error::Cannot read the keystore with the specified store password and alias. Check the keystore and ANDROID_KEYSTORE_PASSWORD.'
+            echo '::error::Cannot read the keystore with the specified store password and alias. Check the keystore, ANDROID_STORE_PASSWORD, and ANDROID_KEY_ALIAS.'
             exit 1
           fi
           fingerprint=$(printf '%s\n' "$keytool_output" | awk -F'SHA256: ' '/SHA256: / {print $2; exit}' | tr -d ': \r\n' | tr '[:lower:]' '[:upper:]')
