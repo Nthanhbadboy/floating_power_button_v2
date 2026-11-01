@@ -88,12 +88,19 @@ jobs:
         run: |
           set -euo pipefail
           apksigner=$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)
-          test -n "$apksigner"
+          if [[ -z "$apksigner" ]]; then
+            echo '::error::Android apksigner was not found in the SDK build-tools.'
+            exit 1
+          fi
           apk=build/app/outputs/flutter-apk/app-release.apk
-          output=$("$apksigner" verify --verbose --print-certs "$apk")
+          if ! output=$("$apksigner" verify --verbose --print-certs "$apk" 2>&1); then
+            while IFS= read -r line; do echo "::error::$line"; done <<< "$output"
+            echo '::error::apksigner could not verify the APK.'
+            exit 1
+          fi
           fingerprint=$(printf '%s\n' "$output" | awk -F': ' '/Signer #1 certificate SHA-256 digest:/ {print $2; exit}' | tr -d ': \r\n' | tr '[:lower:]' '[:upper:]')
           if [[ "$fingerprint" != "$EXPECTED_SHA256" ]]; then
-            echo 'APK signature does not match the expected existing signing key.' >&2
+            echo "::error::APK certificate fingerprint mismatch (found: $fingerprint)."
             exit 1
           fi
           echo 'APK signature matches the expected signing certificate.'
