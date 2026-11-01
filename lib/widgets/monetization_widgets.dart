@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:huawei_ads/huawei_ads.dart';
 
 import '../core/ad_service.dart';
 import '../core/channel_bridge.dart';
 import '../core/localization.dart';
 
-/// Pinned bottom banner showing a REAL Google AdMob adaptive banner.
+/// Pinned bottom banner showing a REAL Petal Ads (Huawei Ads Kit) banner.
 ///
-/// Nothing is drawn (zero height) until an ad has actually loaded, so the user
-/// never sees an empty / fake "ad" strip. Failed loads are retried with a
-/// back-off, and the banner is skipped when the user chose to remove ads.
+/// While the first ad loads a blank 320x50 strip is reserved; if loading fails
+/// the strip collapses to zero height (no fake / empty "ad" area) and a retry
+/// is scheduled with back-off. Hidden when the user chose to remove ads.
 class BottomAdBanner extends StatefulWidget {
   const BottomAdBanner({super.key});
 
@@ -21,110 +21,67 @@ class BottomAdBanner extends StatefulWidget {
 }
 
 class _BottomAdBannerState extends State<BottomAdBanner> {
-  BannerAd? _ad;
-  bool _loaded = false;
+  late final BannerViewController _controller;
   bool _adsRemoved = false;
-  bool _loading = false;
-  int _width = 0;
-  int _retry = 0;
+  bool _loaded = false;
+  bool _failed = false;
+  int _attempt = 0; // also used as the BannerView key -> fresh load on retry
   Timer? _retryTimer;
 
   @override
   void initState() {
     super.initState();
-    AdService.ready.addListener(_maybeLoad);
-    ChannelBridge.isAdsRemoved().then((removed) {
-      if (!mounted) return;
-      setState(() => _adsRemoved = removed);
-    });
-    // Kick the SDK (no-op if already started / retries if it failed earlier).
+    _controller = BannerViewController(listener: _onAdEvent);
     AdService.init();
+    ChannelBridge.isAdsRemoved().then((removed) {
+      if (mounted && removed) setState(() => _adsRemoved = true);
+    });
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final w = MediaQuery.sizeOf(context).width.truncate();
-    if (w != _width) {
-      _width = w;
-      // Orientation / size changed -> adaptive size must be recomputed.
-      _disposeAd();
-      _maybeLoad();
-    }
-  }
-
-  @override
-  void dispose() {
-    AdService.ready.removeListener(_maybeLoad);
-    _retryTimer?.cancel();
-    _disposeAd();
-    super.dispose();
-  }
-
-  void _disposeAd() {
-    _ad?.dispose();
-    _ad = null;
-    _loaded = false;
-    _loading = false;
-  }
-
-  Future<void> _maybeLoad() async {
-    if (!mounted || _loading || _loaded || _adsRemoved) return;
-    if (!AdService.ready.value || _width <= 0) return;
-    _loading = true;
-
-    final size =
-        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(_width);
+  void _onAdEvent(AdEvent event, {int? errorCode}) {
     if (!mounted) return;
-    if (size == null) {
-      _loading = false;
-      _scheduleRetry();
-      return;
+    switch (event) {
+      case AdEvent.loaded:
+        _retryTimer?.cancel();
+        setState(() {
+          _loaded = true;
+          _failed = false;
+        });
+        break;
+      case AdEvent.failed:
+        debugPrint('Petal banner failed, error code: $errorCode');
+        // A failed *refresh* of an already visible ad keeps the old ad.
+        if (_loaded) return;
+        setState(() => _failed = true);
+        _scheduleRetry();
+        break;
+      default:
+        break;
     }
-
-    late final BannerAd ad;
-    ad = BannerAd(
-      adUnitId: AdConfig.bannerUnitId,
-      size: size,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (_) {
-          if (!mounted || !identical(_ad, ad)) return;
-          _retry = 0;
-          setState(() {
-            _loaded = true;
-            _loading = false;
-          });
-        },
-        onAdFailedToLoad: (failed, error) {
-          debugPrint('Banner failed: ${error.code} ${error.message}');
-          failed.dispose();
-          if (!mounted || !identical(_ad, ad)) return;
-          setState(() {
-            _ad = null;
-            _loaded = false;
-            _loading = false;
-          });
-          _scheduleRetry();
-        },
-      ),
-    );
-    _ad = ad;
-    await ad.load();
   }
 
   void _scheduleRetry() {
     _retryTimer?.cancel();
-    // 15s, 30s, 60s, 120s, then every 120s.
-    final seconds = 15 * (1 << (_retry < 3 ? _retry : 3));
-    _retry++;
-    _retryTimer = Timer(Duration(seconds: seconds), _maybeLoad);
+    // 20s, 40s, 80s, 160s, then every 160s.
+    final seconds = 20 * (1 << (_attempt < 3 ? _attempt : 3));
+    _retryTimer = Timer(Duration(seconds: seconds), () {
+      if (!mounted) return;
+      setState(() {
+        _attempt++;
+        _failed = false;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _retryTimer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ad = _ad;
-    if (_adsRemoved || !_loaded || ad == null) {
+    if (_adsRemoved || !AdConfig.isSupported || _failed) {
       return const SizedBox.shrink();
     }
     return Container(
@@ -132,10 +89,15 @@ class _BottomAdBannerState extends State<BottomAdBanner> {
       color: Colors.white,
       child: SafeArea(
         top: false,
-        child: SizedBox(
-          width: ad.size.width.toDouble(),
-          height: ad.size.height.toDouble(),
-          child: AdWidget(ad: ad),
+        child: Center(
+          child: BannerView(
+            key: ValueKey<int>(_attempt),
+            adSlotId: AdConfig.bannerSlotId,
+            size: BannerAdSize.s320x50,
+            backgroundColor: Colors.white,
+            refreshDuration: const Duration(seconds: 60),
+            controller: _controller,
+          ),
         ),
       ),
     );

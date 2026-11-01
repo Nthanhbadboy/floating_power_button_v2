@@ -2,6 +2,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // Huawei Maven repo: hosts the Petal Ads SDK (com.huawei.hms:ads-lite ...)
+        maven { url = uri("https://developer.huawei.com/repo/") }
     }
 }
 

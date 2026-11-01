@@ -25,5 +25,14 @@
 # (No blanket keep on androidx.core: it would stop R8 from removing unused code.)
 -dontwarn androidx.**
 
-# Google Mobile Ads / UMP ship their own consumer rules; nothing extra needed.
+# Petal Ads (Huawei Ads Kit) - rules required by the HMS SDK documentation.
+-ignorewarnings
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keep class com.hianalytics.android.** { *; }
+-keep class com.huawei.updatesdk.** { *; }
+-keep class com.huawei.hms.** { *; }
+-keep class com.huawei.hms.flutter.** { *; }
 -dontwarn kotlinx.coroutines.**

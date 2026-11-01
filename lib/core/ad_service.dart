@@ -1,85 +1,54 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:huawei_ads/huawei_ads.dart';
 
-/// Central place for AdMob configuration + SDK start-up.
+/// Petal Ads (Huawei Ads Kit) configuration.
 ///
-/// IDs default to Google's official TEST IDs so the banner always fills while
-/// developing. For production pass your own ad unit id at build time:
-///
-///   ADMOB_BANNER_ID=ca-app-pub-XXXX/YYYY ADMOB_APP_ID=ca-app-pub-XXXX~ZZZZ \
-///     ./build_release.sh
-///
-/// (or `--dart-define=ADMOB_BANNER_ID=...` + `ADMOB_APP_ID=...` in
-/// android/gradle.properties).
+/// Values come from Petal Ads Console (Publisher Service):
+///  * App ID      : 119378375   (informational - the SDK identifies the app by
+///                               its package name `com.floatingbutton.app`)
+///  * Banner slot : i3kcblwkv6  (Ad unit ID = "ad slot id" in the SDK)
 class AdConfig {
   AdConfig._();
 
-  static const String _testBannerAndroid =
-      'ca-app-pub-3940256099942544/9214589741';
+  static const String appId = '119378375';
 
-  static const String bannerUnitId = String.fromEnvironment(
-    'ADMOB_BANNER_ID',
-    defaultValue: _testBannerAndroid,
+  /// Real banner ad unit created in Petal Ads Console.
+  static const String _productionBannerId = String.fromEnvironment(
+    'PETAL_BANNER_ID',
+    defaultValue: 'i3kcblwkv6',
   );
+
+  /// Huawei's official TEST banner slot - always returns a sample ad.
+  static const String testBannerId = 'testw6vs28auh3';
+
+  /// Force the test slot even in release (verify wiring before the real ad
+  /// unit is released/approved):  --dart-define=PETAL_USE_TEST_ADS=true
+  static const bool _forceTest = bool.fromEnvironment('PETAL_USE_TEST_ADS');
+
+  /// Debug builds always use the test slot so you never click your own real
+  /// ads (which can get a Petal Ads account suspended).
+  static String get bannerSlotId =>
+      (kDebugMode || _forceTest) ? testBannerId : _productionBannerId;
 
   static bool get isSupported => !kIsWeb && Platform.isAndroid;
 }
 
-/// Starts the Google Mobile Ads SDK once (after UMP consent) and tells the UI
-/// when ad requests may be made.
+/// Initialises the Petal Ads SDK once.
 class AdService {
   AdService._();
 
-  /// `true` once the SDK is initialised and consent allows requesting ads.
-  static final ValueNotifier<bool> ready = ValueNotifier<bool>(false);
-
-  static bool _started = false;
+  static bool _initialised = false;
 
   static Future<void> init() async {
-    if (_started || !AdConfig.isSupported) return;
-    _started = true;
-
+    if (_initialised || !AdConfig.isSupported) return;
+    _initialised = true;
     try {
-      // 1. Consent (EEA / UK / etc.). Shows the Google form only if required.
-      final consentDone = Completer<void>();
-      ConsentInformation.instance.requestConsentInfoUpdate(
-        ConsentRequestParameters(),
-        () async {
-          try {
-            await ConsentForm.loadAndShowConsentFormIfRequired((FormError? e) {
-              if (e != null) debugPrint('UMP form error: ${e.message}');
-            });
-          } catch (e) {
-            debugPrint('UMP form exception: $e');
-          }
-          if (!consentDone.isCompleted) consentDone.complete();
-        },
-        (FormError error) {
-          debugPrint('UMP update error: ${error.message}');
-          if (!consentDone.isCompleted) consentDone.complete();
-        },
-      );
-      await consentDone.future.timeout(
-        const Duration(seconds: 20),
-        onTimeout: () {},
-      );
-
-      // 2. Only start the SDK if we are allowed to request ads. If UMP could
-      //    not be reached (offline) canRequestAds reflects the last known state.
-      final canRequest = await ConsentInformation.instance.canRequestAds();
-      if (!canRequest) {
-        _started = false; // allow a later retry (e.g. app resumed online)
-        return;
-      }
-
-      await MobileAds.instance.initialize();
-      ready.value = true;
+      await HwAds.init();
     } catch (e) {
-      debugPrint('AdService.init failed: $e');
-      _started = false;
+      debugPrint('Petal Ads init failed: $e');
+      _initialised = false;
     }
   }
 }

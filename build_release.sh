@@ -3,15 +3,13 @@
 # a release build is only a few MB per ABI.
 #
 # Usage:
-#   ADMOB_APP_ID=ca-app-pub-XXXX~YYYY ADMOB_BANNER_ID=ca-app-pub-XXXX/ZZZZ ./build_release.sh
-# Without those variables Google's TEST ad ids are used (test ads only, no revenue).
+#   ./build_release.sh                      # real Petal Ads banner (slot i3kcblwkv6)
+#   PETAL_USE_TEST_ADS=true ./build_release.sh   # release build that shows Huawei TEST ads
 set -euo pipefail
 cd "$(dirname "$0")"
 
 ARGS=(--release --split-per-abi --obfuscate --split-debug-info=build/symbols)
-[ -n "${ADMOB_BANNER_ID:-}" ] && ARGS+=(--dart-define=ADMOB_BANNER_ID="$ADMOB_BANNER_ID")
-# `flutter build` has no -P passthrough; Gradle reads this env var as property ADMOB_APP_ID.
-[ -n "${ADMOB_APP_ID:-}" ]    && export ORG_GRADLE_PROJECT_ADMOB_APP_ID="$ADMOB_APP_ID"
+[ "${PETAL_USE_TEST_ADS:-}" = "true" ] && ARGS+=(--dart-define=PETAL_USE_TEST_ADS=true)
 
 flutter build apk "${ARGS[@]}"
 ls -lh build/app/outputs/flutter-apk/*-release.apk

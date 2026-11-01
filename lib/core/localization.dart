@@ -663,8 +663,8 @@ class AppStrings {
       : 'Ads keep this utility 100% free for everyone';
 
   static String get adBannerSub => isVietnamese()
-      ? 'Google AdMob / Petal Ads Banner'
-      : 'Google AdMob / Petal Ads Banner';
+      ? 'Petal Ads'
+      : 'Petal Ads';
 
   static String get payoneerGuide => isVietnamese()
       ? 'Bạn có thể chuyển tiền ủng hộ qua tính năng Pay / Make a Payment của Payoneer đến email trên, hoặc chuyển khoản quốc tế.'
