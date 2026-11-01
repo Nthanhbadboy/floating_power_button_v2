@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import androidx.core.app.NotificationManagerCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -160,6 +161,9 @@ class MainActivity : FlutterActivity() {
 
                 "startKeepAliveService" -> {
                     try {
+                        check(NotificationManagerCompat.from(this).areNotificationsEnabled()) {
+                            "Notifications are disabled"
+                        }
                         val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
                         check(prefs.edit().putBoolean("keep_alive_explicitly_enabled_v2", true).commit()) {
                             "Could not save quick controls preference"
@@ -202,11 +206,11 @@ class MainActivity : FlutterActivity() {
 
                 "requestNotificationPermission" -> {
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                        result.success(true)
+                        result.success(NotificationManagerCompat.from(this).areNotificationsEnabled())
                     } else if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) ==
                         PackageManager.PERMISSION_GRANTED
                     ) {
-                        result.success(true)
+                        result.success(NotificationManagerCompat.from(this).areNotificationsEnabled())
                     } else {
                         pendingNotifResult = result
                         requestPermissions(

@@ -11,6 +11,7 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 
 class KeepAliveService : Service() {
 
@@ -30,7 +31,8 @@ class KeepAliveService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val enabled = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
             .getBoolean("keep_alive_explicitly_enabled_v2", false)
-        if (!enabled || intent?.action == ACTION_STOP) {
+        if (!enabled || !NotificationManagerCompat.from(this).areNotificationsEnabled() ||
+            intent?.action == ACTION_STOP) {
             isRunning = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_REMOVE)

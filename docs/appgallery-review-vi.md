@@ -15,6 +15,6 @@
 
 1. Cài mới, ngắt mạng và kiểm tra lời nhắc, mở chính sách Trung văn và đủ tên app/nhà phát triển. Mở lại chính sách từ màn hình chính.
 2. Chọn các ngôn ngữ, bao gồm tiếng Trung và tiếng Arab; đóng/mở app để kiểm tra lựa chọn được lưu. Kiểm tra thông báo, quyền trợ năng, nút hệ thống, text lớn và màn hình nhỏ.
-3. Tắt dịch vụ, cấp trợ năng/quản trị, khởi động lại máy và xác nhận dịch vụ vẫn tắt. Bật dịch vụ bằng xác nhận rõ ràng, thử khởi động lại và cập nhật app; kiểm tra thông báo, sau đó tắt và khởi động lại lần nữa. Kiểm tra cả trường hợp từ chối quyền thông báo.
+3. Tắt dịch vụ, cấp trợ năng/quản trị, khởi động lại máy và xác nhận dịch vụ vẫn tắt. Bật dịch vụ bằng xác nhận rõ ràng, thử khởi động lại và cập nhật app; kiểm tra thông báo, sau đó tắt và khởi động lại lần nữa. Kiểm tra cả trường hợp từ chối quyền thông báo, và thu hồi quyền thông báo sau khi đã bật rồi khởi động lại.
 4. Kiểm thử P40 EMUI 11 và Mate 70 HarmonyOS 4.3 nếu có. OEM/hệ điều hành có thể hạn chế khởi động nền; không cam kết chạy liên tục.
 5. So sánh fingerprint APK mới với chứng chỉ APK đã tải lên Huawei trước đây; kiểm tra versionCode trên cửa hàng trước khi phát hành. Việc thông qua kiểm thử tự động không bảo đảm Huawei chấp thuận lại mọi khu vực.

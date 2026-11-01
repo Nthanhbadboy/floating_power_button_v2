@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 
 class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -14,7 +15,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
             // foreground service. Only restore a service explicitly enabled by the user.
             val enabled = context.getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
                 .getBoolean("keep_alive_explicitly_enabled_v2", false)
-            if (!enabled) return
+            if (!enabled || !NotificationManagerCompat.from(context).areNotificationsEnabled()) return
 
             val serviceIntent = Intent(context, KeepAliveService::class.java).apply {
                 this.action = KeepAliveService.ACTION_START
