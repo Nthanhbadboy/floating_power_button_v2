@@ -85,9 +85,7 @@ jobs:
           set -o pipefail
           chmod +x android/gradlew
           if ! flutter build apk --release 2>&1 | tee "$RUNNER_TEMP/android-build.log"; then
-            tail -n 100 "$RUNNER_TEMP/android-build.log" | while IFS= read -r line; do
-              echo "::error::$line"
-            done
+            python3 -c 'import sys; text="".join(open(sys.argv[1], errors="replace").readlines()[-100:]); print("::error::" + text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))' "$RUNNER_TEMP/android-build.log"
             exit 1
           fi
       - name: Upload merged Android manifest for privacy review
