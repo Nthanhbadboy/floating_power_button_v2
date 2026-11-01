@@ -88,6 +88,18 @@ jobs:
             python3 -c 'import sys; text="".join(open(sys.argv[1], errors="replace").readlines()[-100:]); print("::error::" + text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))' "$RUNNER_TEMP/android-build.log"
             exit 1
           fi
+      - name: Summarize merged manifest for privacy review
+        shell: bash
+        run: |
+          python3 - <<'PYCODE'
+          import xml.etree.ElementTree as E
+          p = 'build/app/intermediates/merged_manifests/release/processReleaseManifest/AndroidManifest.xml'
+          root = E.parse(p).getroot()
+          ns = '{http://schemas.android.com/apk/res/android}'
+          rows = ['Permissions:'] + [x.get(ns+'name', '') for x in root.findall('uses-permission')]
+          rows += ['Providers:'] + [x.get(ns+'name', '') for x in root.findall('./application/provider')]
+          print('::notice::' + '\n'.join(rows).replace('%', '%25').replace('\n', '%0A'))
+          PYCODE
       - name: Upload merged Android manifest for privacy review
         uses: actions/upload-artifact@v4
         with:
