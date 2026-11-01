@@ -37,18 +37,33 @@ jobs:
           ENCODED_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         run: |
           set -euo pipefail
-          if [[ -z "$ENCODED_KEYSTORE" || -z "$ANDROID_KEYSTORE_PASSWORD" || -z "$ANDROID_KEY_PASSWORD" ]]; then
-            echo 'Missing signing secrets. See docs/github-release-vi.md.' >&2
-            exit 1
-          fi
+          missing=0
+          for name in ENCODED_KEYSTORE ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_PASSWORD; do
+            if [[ -z "${!name}" ]]; then
+              case "$name" in
+                ENCODED_KEYSTORE) secret_name=ANDROID_KEYSTORE_BASE64 ;;
+                *) secret_name="$name" ;;
+              esac
+              echo "::error::Missing GitHub Actions secret: $secret_name"
+              missing=1
+            fi
+          done
+          if [[ "$missing" == 1 ]]; then exit 1; fi
           umask 077
           KEYSTORE="$RUNNER_TEMP/power-volume-signing.keystore"
-          printf '%s' "$ENCODED_KEYSTORE" | base64 --decode > "$KEYSTORE"
+          if ! printf '%s' "$ENCODED_KEYSTORE" | base64 --decode > "$KEYSTORE"; then
+            echo '::error::ANDROID_KEYSTORE_BASE64 is not valid base64. Recreate it from the existing keystore.'
+            exit 1
+          fi
           echo "ANDROID_KEYSTORE_PATH=$KEYSTORE" >> "$GITHUB_ENV"
-          fingerprint=$(keytool -list -v -keystore "$KEYSTORE" -alias "$ANDROID_KEY_ALIAS" \
-            -storepass:env ANDROID_KEYSTORE_PASSWORD | awk -F'SHA256: ' '/SHA256: / {print $2; exit}' | tr -d ': \r\n' | tr '[:lower:]' '[:upper:]')
+          if ! keytool_output=$(keytool -list -v -keystore "$KEYSTORE" -alias "$ANDROID_KEY_ALIAS" \
+            -storepass:env ANDROID_KEYSTORE_PASSWORD 2>/dev/null); then
+            echo '::error::Cannot read the keystore with the specified store password and alias. Check the keystore and ANDROID_KEYSTORE_PASSWORD.'
+            exit 1
+          fi
+          fingerprint=$(printf '%s\n' "$keytool_output" | awk -F'SHA256: ' '/SHA256: / {print $2; exit}' | tr -d ': \r\n' | tr '[:lower:]' '[:upper:]')
           if [[ "$fingerprint" != "$EXPECTED_SHA256" ]]; then
-            echo 'Keystore certificate does not match the expected existing signing key.' >&2
+            echo '::error::Keystore certificate does not match the expected existing signing key.'
             exit 1
           fi
       - name: Get dependencies
