@@ -98,10 +98,18 @@ jobs:
             echo '::error::apksigner could not verify the APK.'
             exit 1
           fi
-          fingerprint=$(printf '%s\n' "$output" | awk -F': ' '/Signer #1 certificate SHA-256 digest:/ {print $2; exit}' | tr -d ': \r\n' | tr '[:lower:]' '[:upper:]')
-          if [[ "$fingerprint" != "$EXPECTED_SHA256" ]]; then
-            while IFS= read -r line; do echo "::notice::$line"; done <<< "$output"
-            echo "::error::APK certificate fingerprint mismatch (found: $fingerprint)."
+          if ! printf '%s\n' "$output" | grep -qx 'Number of signers: 1'; then
+            echo '::error::APK must have exactly one signer.'
+            exit 1
+          fi
+          # Build-tools 36 prints "Signer #1"; 37 prints "V2 Signer:".
+          mapfile -t fingerprints < <(printf '%s\n' "$output" | awk '
+            /^(Signer( \([^)]*\))? #[0-9]+|V[0-9.]+ Signer( #[0-9]+)?):? certificate SHA-256 digest:/ {
+              sub(/^.*certificate SHA-256 digest:[[:space:]]*/, "")
+              print
+            }' | tr -d ': \r' | tr '[:lower:]' '[:upper:]' | sort -u)
+          if [[ ${#fingerprints[@]} -ne 1 || "${fingerprints[0]}" != "$EXPECTED_SHA256" ]]; then
+            echo '::error::APK signer certificate missing or does not match the existing signing key.'
             exit 1
           fi
           echo 'APK signature matches the expected signing certificate.'
