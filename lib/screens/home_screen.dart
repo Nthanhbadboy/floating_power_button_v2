@@ -5,6 +5,7 @@ import '../core/channel_bridge.dart';
 import '../core/localization.dart';
 import '../widgets/disclosure_dialog.dart';
 import '../widgets/monetization_widgets.dart';
+import '../widgets/privacy_notice.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -97,10 +98,40 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       }
       return;
     }
+    final code = AppStrings.effectiveLanguageCode;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(code == 'vi' ? 'Bật điều khiển nhanh?' :
+            code == 'zh' ? '启用快捷控制？' : 'Enable quick controls?'),
+        content: Text(code == 'vi'
+            ? 'Dịch vụ tùy chọn này hiển thị thông báo liên tục với nút khóa màn hình và âm lượng. Khi được bật, dịch vụ có thể tự khởi động lại sau khi khởi động máy hoặc cập nhật ứng dụng. Bạn có thể tắt bất cứ lúc nào bằng công tắc này.'
+            : code == 'zh'
+                ? '此可选服务会显示包含锁屏和音量按钮的常驻通知。启用后，它可能在设备重启或应用更新后自动启动。您可以随时使用此开关关闭。'
+                : 'This optional service shows a persistent notification with lock and volume controls. When enabled, it may restart after a device reboot or app update. You can turn it off at any time using this switch.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false),
+              child: Text(code == 'vi' ? 'Hủy' : code == 'zh' ? '取消' : 'Cancel')),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true),
+              child: Text(code == 'vi' ? 'Bật' : code == 'zh' ? '启用' : 'Enable')),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
     // Android 13+ suppresses ALL notifications (including the foreground-service
     // icon) until POST_NOTIFICATIONS is granted - request it BEFORE starting.
     final notifOk = await ChannelBridge.requestNotificationPermission();
-    await ChannelBridge.startKeepAliveService();
+    if (!mounted) return;
+    final started = await ChannelBridge.startKeepAliveService();
+    if (!started) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
+          code == 'vi' ? 'Không thể bật dịch vụ. Vui lòng thử lại.' :
+          code == 'zh' ? '无法启动服务，请重试。' : 'Could not start the service. Please try again.',
+        )));
+      }
+      return;
+    }
     await Future.delayed(const Duration(milliseconds: 300));
     if (mounted) {
       final running = await ChannelBridge.isKeepAliveRunning();
@@ -481,6 +512,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             // 5. FULL OEM BACKGROUND PROTECTION GUIDANCE (HUAWEI, XIAOMI, SAMSUNG, OPPO, VIVO, ETC.)
             _buildOemGuidanceSection(),
             const SizedBox(height: 20),
+
+            TextButton.icon(
+              onPressed: () => openPrivacyPolicy(context),
+              icon: const Icon(Icons.privacy_tip_outlined),
+              label: Text(AppStrings.effectiveLanguageCode == 'vi'
+                  ? 'Chính sách quyền riêng tư'
+                  : AppStrings.effectiveLanguageCode == 'zh' ? '隐私政策' : 'Privacy policy'),
+            ),
 
             // 6. CREATOR SUPPORT / DONATION CARD (VIETQR VCB 1020506046 & PAYONEER)
             _buildSupportSection(),

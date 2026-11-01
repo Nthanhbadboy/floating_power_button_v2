@@ -12,4 +12,10 @@
     <string name="shortcut_lock_long">Lock Screen</string>
     <string name="shortcut_volume_short">Volume</string>
     <string name="shortcut_volume_long">System Volume</string>
+    <string name="quick_controls_channel">Power &amp; Volume Quick Controls</string>
+    <string name="quick_controls_channel_description">Keeps Lock and Volume controls available in a notification</string>
+    <string name="quick_controls_title">Power &amp; Volume Active</string>
+    <string name="quick_controls_description">Tap for quick controls</string>
+    <string name="quick_controls_lock">Lock</string>
+    <string name="quick_controls_volume">Volume</string>
 </resources>

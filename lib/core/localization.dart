@@ -495,10 +495,12 @@ class AppStrings {
   static String get deviceAdminActive => isVietnamese() ? 'Đã kích hoạt (Khóa phần cứng 0ms)' : 'Active (Hardware 0ms lock)';
   static String get deviceAdminInactive => isVietnamese() ? 'Chưa kích hoạt (Nên bật để chống bị tắt)' : 'Inactive (Recommended to prevent kill)';
 
-  static String get keepAliveTitle => isVietnamese() ? 'Chạy ngầm liên tục (Keep-Alive)' : 'Keep-Alive Foreground Service';
+  static String get keepAliveTitle => isVietnamese() ? 'Điều khiển nhanh trên thông báo' :
+      effectiveLanguageCode == 'zh' ? '通知栏快捷控制' : 'Notification quick controls';
   static String get keepAliveDesc => isVietnamese()
-      ? 'Bảo vệ dịch vụ trợ năng không bị tắt khi vuốt đóng đa nhiệm'
-      : 'Protects accessibility service from being killed when swiped away';
+      ? 'Tùy chọn: hiển thị thông báo liên tục với nút khóa và âm lượng.'
+      : effectiveLanguageCode == 'zh' ? '可选：显示包含锁屏和音量按钮的常驻通知。'
+      : 'Optional: show a persistent notification with lock and volume controls.';
 
   static String get batteryOptTitle => isVietnamese() ? 'Bỏ qua tối ưu hóa pin' : 'Ignore Battery Optimization';
   static String get batteryOptActive => isVietnamese() ? 'Đã cho phép không hạn chế' : 'Unrestricted';

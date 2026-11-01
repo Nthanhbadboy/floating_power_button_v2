@@ -27,15 +27,10 @@ class KeepAliveService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    override fun onCreate() {
-        super.onCreate()
-        createNotificationChannel()
-        startAsForeground()
-        isRunning = true
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent?.action == ACTION_STOP) {
+        val enabled = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+            .getBoolean("keep_alive_explicitly_enabled_v2", false)
+        if (!enabled || intent?.action == ACTION_STOP) {
             isRunning = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_REMOVE)
@@ -62,11 +57,11 @@ class KeepAliveService : Service() {
             manager?.deleteNotificationChannel(LEGACY_CHANNEL_ID)
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Power & Volume Quick Controls",
+                getString(R.string.quick_controls_channel),
                 // LOW (not MIN): shows the status-bar icon without sound/vibration.
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = "Keeps quick Lock & Volume controls available in the status bar"
+                description = getString(R.string.quick_controls_channel_description)
                 setShowBadge(false)
             }
             manager?.createNotificationChannel(channel)
@@ -96,18 +91,18 @@ class KeepAliveService : Service() {
         )
 
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Power & Volume Active")
-            .setContentText("Tap for quick controls • Lock & Volume available here")
+            .setContentTitle(getString(R.string.quick_controls_title))
+            .setContentText(getString(R.string.quick_controls_description))
             .setSmallIcon(R.drawable.ic_lock)
             .setContentIntent(pendingIntent)
             .addAction(
                 R.drawable.ic_lock,
-                "Lock",
+                getString(R.string.quick_controls_lock),
                 activityPendingIntent(1, MainActivity.ACTION_QUICK_LOCK)
             )
             .addAction(
                 R.drawable.ic_volume,
-                "Volume",
+                getString(R.string.quick_controls_volume),
                 activityPendingIntent(2, MainActivity.ACTION_QUICK_VOLUME)
             )
             .setPriority(NotificationCompat.PRIORITY_LOW)

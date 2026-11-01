@@ -20,6 +20,7 @@ class AccessibilityDisclosureDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vi = AppStrings.isVietnamese();
+    final zh = AppStrings.effectiveLanguageCode == 'zh';
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       title: Row(
@@ -28,7 +29,7 @@ class AccessibilityDisclosureDialog extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              vi ? 'Minh bạch Dịch vụ Trợ năng' : 'Accessibility Service Disclosure',
+              vi ? 'Minh bạch Dịch vụ Trợ năng' : zh ? '无障碍服务说明' : 'Accessibility Service Disclosure',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
@@ -40,7 +41,7 @@ class AccessibilityDisclosureDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              vi ? 'Mục đích sử dụng duy nhất:' : 'Sole Purpose of Use:',
+              vi ? 'Mục đích sử dụng duy nhất:' : zh ? '使用目的：' : 'Sole Purpose of Use:',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87),
             ),
             const SizedBox(height: 10),
@@ -53,6 +54,12 @@ class AccessibilityDisclosureDialog extends StatelessWidget {
                     '• KHÔNG thu thập hoặc gửi bất kỳ thông tin cá nhân hay thao tác bàn phím nào.\n'
                     '• Dịch vụ chỉ thực hiện khi người dùng chủ động bấm nút.\n\n'
                     'Cách bật: Bấm "Đồng ý & Mở Cài đặt", tìm "Power & Volume" trong mục Ứng dụng đã cài đặt / Dịch vụ đã cài đặt và BẬT công tắc.'
+                  : zh
+                  ? '本应用仅使用 Android 无障碍服务执行锁屏操作：\n\n'
+                    '• 当您点击锁屏按钮或快捷设置磁贴时，执行系统锁屏操作。\n\n'
+                    '• 本服务不会读取屏幕内容或输入的文字，也不会收集或发送个人数据或按键内容。\n'
+                    '• 仅在您主动操作时执行锁屏。\n\n'
+                    '启用方法：点击“同意并打开设置”，在已安装的服务中找到“Power & Volume”，然后开启开关。'
                   : 'This application uses the Android AccessibilityService API strictly for one single system action:\n\n'
                     '• GLOBAL_ACTION_LOCK_SCREEN: Locks the screen immediately when you tap the Lock button or use the Quick Settings Tile.\n\n'
                     'Privacy & Policy Guarantees:\n'
@@ -69,7 +76,7 @@ class AccessibilityDisclosureDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(vi ? 'Hủy' : 'Cancel', style: const TextStyle(color: Colors.grey)),
+          child: Text(vi ? 'Hủy' : zh ? '取消' : 'Cancel', style: const TextStyle(color: Colors.grey)),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -81,7 +88,7 @@ class AccessibilityDisclosureDialog extends StatelessWidget {
             Navigator.of(context).pop();
             onAccept();
           },
-          child: Text(vi ? 'Đồng ý & Mở Cài đặt' : 'Agree & Open Settings'),
+          child: Text(vi ? 'Đồng ý & Mở Cài đặt' : zh ? '同意并打开设置' : 'Agree & Open Settings'),
         ),
       ],
     );

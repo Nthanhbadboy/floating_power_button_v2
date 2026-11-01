@@ -12,4 +12,10 @@
     <string name="shortcut_lock_long">Khóa màn hình</string>
     <string name="shortcut_volume_short">Âm lượng</string>
     <string name="shortcut_volume_long">Bảng âm lượng</string>
+    <string name="quick_controls_channel">Điều khiển nhanh Power &amp; Volume</string>
+    <string name="quick_controls_channel_description">Hiển thị nút khóa và âm lượng trong thông báo</string>
+    <string name="quick_controls_title">Power &amp; Volume đang hoạt động</string>
+    <string name="quick_controls_description">Chạm để mở điều khiển nhanh</string>
+    <string name="quick_controls_lock">Khóa</string>
+    <string name="quick_controls_volume">Âm lượng</string>
 </resources>

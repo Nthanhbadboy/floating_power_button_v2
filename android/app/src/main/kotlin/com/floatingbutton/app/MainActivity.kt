@@ -56,6 +56,27 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
+                "hasAcknowledgedPrivacy" -> {
+                    val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+                    result.success(prefs.getBoolean("privacy_notice_acknowledged_v1", false))
+                }
+
+                "acknowledgePrivacy" -> {
+                    val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
+                    result.success(prefs.edit().putBoolean("privacy_notice_acknowledged_v1", true).commit())
+                }
+
+                "openPrivacyPolicy" -> {
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                            "https://power-volume-privacy.vercel.app/privacy-policy.html"
+                        )))
+                        result.success(true)
+                    } catch (e: Exception) {
+                        result.success(false)
+                    }
+                }
+
                 "getDeviceInfo" -> {
                     val info = mapOf(
                         "manufacturer" to Build.MANUFACTURER,
@@ -119,7 +140,9 @@ class MainActivity : FlutterActivity() {
                 "startKeepAliveService" -> {
                     try {
                         val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
-                        prefs.edit().putBoolean("keep_alive_enabled", true).apply()
+                        check(prefs.edit().putBoolean("keep_alive_explicitly_enabled_v2", true).commit()) {
+                            "Could not save quick controls preference"
+                        }
                         val intent = Intent(this, KeepAliveService::class.java).apply {
                             action = KeepAliveService.ACTION_START
                         }
@@ -130,6 +153,8 @@ class MainActivity : FlutterActivity() {
                         }
                         result.success(true)
                     } catch (e: Exception) {
+                        getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE).edit()
+                            .putBoolean("keep_alive_explicitly_enabled_v2", false).commit()
                         result.error("SERVICE_ERROR", "Cannot start keep-alive service", e.message)
                     }
                 }
@@ -137,11 +162,9 @@ class MainActivity : FlutterActivity() {
                 "stopKeepAliveService" -> {
                     try {
                         val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
-                        prefs.edit().putBoolean("keep_alive_enabled", false).apply()
-                        val intent = Intent(this, KeepAliveService::class.java).apply {
-                            action = KeepAliveService.ACTION_STOP
+                        check(prefs.edit().putBoolean("keep_alive_explicitly_enabled_v2", false).commit()) {
+                            "Could not save quick controls preference"
                         }
-                        startService(intent)
                         stopService(Intent(this, KeepAliveService::class.java))
                         result.success(true)
                     } catch (e: Exception) {
@@ -151,7 +174,7 @@ class MainActivity : FlutterActivity() {
 
                 "isKeepAliveRunning" -> {
                     val prefs = getSharedPreferences("prefs_power_button", Context.MODE_PRIVATE)
-                    val isPrefEnabled = prefs.getBoolean("keep_alive_enabled", true)
+                    val isPrefEnabled = prefs.getBoolean("keep_alive_explicitly_enabled_v2", false)
                     val isRunning = KeepAliveService.isRunning || isServiceRunning(KeepAliveService::class.java)
                     result.success(isPrefEnabled && isRunning)
                 }

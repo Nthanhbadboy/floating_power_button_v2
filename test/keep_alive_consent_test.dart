@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:floating_power_button/core/localization.dart';
+import 'package:floating_power_button/screens/home_screen.dart';
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  const channel = MethodChannel('com.floatingbutton.app/bridge');
+  final calls = <String>[];
+  var running = false;
+
+  setUp(() {
+    AppStrings.currentLanguage = SupportedLanguage.english;
+    calls.clear();
+    running = false;
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) async {
+      calls.add(call.method);
+      switch (call.method) {
+        case 'getDeviceInfo': return <String, dynamic>{};
+        case 'isKeepAliveRunning': return running;
+        case 'requestNotificationPermission': return true;
+        case 'startKeepAliveService': running = true; return true;
+        case 'stopKeepAliveService': running = false; return true;
+        default: return false;
+      }
+    });
+  });
+  tearDown(() {
+    AppStrings.currentLanguage = SupportedLanguage.system;
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
+  });
+
+  testWidgets('service only starts after explicit confirmation', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byType(Switch), 300);
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    expect(find.text('Enable quick controls?'), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(calls, isNot(contains('startKeepAliveService')));
+
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Enable'));
+    await tester.pumpAndSettle(const Duration(milliseconds: 400));
+    expect(calls, contains('startKeepAliveService'));
+    expect(running, isTrue);
+  });
+}

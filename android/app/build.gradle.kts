@@ -4,6 +4,24 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// GitHub runners must use the existing Windows keystore, never a freshly
+// generated debug key. Local builds keep the existing debug signing behavior.
+val keystorePath = System.getenv("ANDROID_KEYSTORE_PATH")?.takeIf { it.isNotBlank() }
+val keystorePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")?.takeIf { it.isNotBlank() }
+val signingKeyAlias = System.getenv("ANDROID_KEY_ALIAS")?.takeIf { it.isNotBlank() }
+val signingKeyPassword = System.getenv("ANDROID_KEY_PASSWORD")?.takeIf { it.isNotBlank() }
+val signingValues = listOf(keystorePath, keystorePassword, signingKeyAlias, signingKeyPassword)
+val hasExternalSigning = signingValues.all { it != null }
+if (signingValues.any { it != null } && !hasExternalSigning) {
+    throw GradleException("All ANDROID_KEYSTORE_* and ANDROID_KEY_* signing variables are required")
+}
+if (System.getenv("GITHUB_ACTIONS") == "true" && !hasExternalSigning) {
+    throw GradleException("GitHub builds require the existing signing keystore")
+}
+if (hasExternalSigning && !file(keystorePath!!).isFile) {
+    throw GradleException("Signing keystore does not exist")
+}
+
 android {
     namespace = "com.floatingbutton.app"
     compileSdk = 36
@@ -23,13 +41,26 @@ android {
         // API 28 is required for AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN
         minSdk = 28
         targetSdk = 36
-        versionCode = 2
-        versionName = "2.0.0"
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    signingConfigs {
+        if (hasExternalSigning) {
+            create("existingRelease") {
+                storeFile = file(keystorePath!!)
+                storePassword = keystorePassword
+                this.keyAlias = signingKeyAlias
+                this.keyPassword = signingKeyPassword
+            }
+        }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName(
+                if (hasExternalSigning) "existingRelease" else "debug"
+            )
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

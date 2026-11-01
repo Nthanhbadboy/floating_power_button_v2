@@ -41,6 +41,30 @@ class DeviceInfo {
 class ChannelBridge {
   static const MethodChannel _channel = MethodChannel('com.floatingbutton.app/bridge');
 
+  static Future<bool> hasAcknowledgedPrivacy() async {
+    try {
+      return await _channel.invokeMethod<bool>('hasAcknowledgedPrivacy') ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> acknowledgePrivacy() async {
+    try {
+      return await _channel.invokeMethod<bool>('acknowledgePrivacy') ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> openPrivacyPolicy() async {
+    try {
+      return await _channel.invokeMethod<bool>('openPrivacyPolicy') ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
   /// Fetches hardware & manufacturer details for smart device-specific UX.
   static Future<DeviceInfo> getDeviceInfo() async {
     try {

@@ -8,4 +8,10 @@
     <string name="shortcut_lock_long">一键锁屏</string>
     <string name="shortcut_volume_short">音量</string>
     <string name="shortcut_volume_long">系统音量</string>
+    <string name="quick_controls_channel">Power &amp; Volume 快捷控制</string>
+    <string name="quick_controls_channel_description">在通知中显示锁屏和音量控制</string>
+    <string name="quick_controls_title">Power &amp; Volume 正在运行</string>
+    <string name="quick_controls_description">点按打开快捷控制</string>
+    <string name="quick_controls_lock">锁屏</string>
+    <string name="quick_controls_volume">音量</string>
 </resources>
